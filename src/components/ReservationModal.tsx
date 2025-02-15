@@ -16,13 +16,15 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                         transition
                         className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-3xl data-closed:sm:translate-y-0 data-closed:sm:scale-95"
                     >
+                        <div className="bg-gray-800 px-4 py-3 sm:flex sm:px-6 pt-6 pb-6">
+                            <DialogTitle as="h3" className=" text-2xl font-semibold text-white ">
+                                Neue Reservierung
+                            </DialogTitle>
+                        </div>
                         <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                             <div className="sm:flex sm:items-start">
-                                <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                    <DialogTitle as="h3" className="text-2xl font-semibold text-gray-900">
-                                        Neue Reservierung
-                                    </DialogTitle>
-                                    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12">
+                                <div className="mt-3 mb-3 text-center sm:mt-0 sm:ml-4 sm:mr-4 sm:text-left w-full ">
+                                    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12 w-full">
                                         <div className="sm:col-span-4">
                                             <label htmlFor="name" className="block text-lg/6 font-medium text-gray-900">
                                                 Name
@@ -112,11 +114,11 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                        <div className="bg-gray-100 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 pt-6 pb-6">
                             <button
                                 type="button"
                                 onClick={() => setOpen(false)}
-                                className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-blue-500 sm:ml-3 sm:w-auto"
+                                className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-blue-500 sm:ml-6 sm:mr-4 sm:w-auto"
                             >
                                 Speichern
                             </button>
