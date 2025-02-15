@@ -1,10 +1,12 @@
 import { Disclosure } from '@headlessui/react'
+import * as React from "react";
+import {Link} from "react-router-dom";
 
 const navigation = [
-    { name: 'Heute', href: '#', current: true },
-    { name: 'Reservierungen', href: '#', current: false },
-    { name: 'Statistik', href: '#', current: false },
-    { name: 'Admin', href: '#', current: false },
+    { name: 'Heute', href: '/today', width: 'w-30' },
+    { name: 'Reservierungen', href: '/reservations', width: 'w-48' },
+    { name: 'Statistik', href: '/stats', width: 'w-36' },
+    { name: 'Admin', href: '/admin', width: 'w-30' },
 ]
 
 function classNames(...classes: string[]) {
@@ -12,6 +14,8 @@ function classNames(...classes: string[]) {
 }
 
 export default function NavBar() {
+    const [activeTab, setActiveTab] = React.useState<string>('Heute')
+
     return (
         <Disclosure as="nav" className="border-b border-gray-200 bg-gray-800">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -24,17 +28,18 @@ export default function NavBar() {
                     </div>
                     <div className="ml-10 flex items-baseline space-x-4">
                         {navigation.map((item) => (
-                            <a
+                            <Link
                                 key={item.name}
-                                href={item.href}
-                                aria-current={item.current ? 'page' : undefined}
+                                to={item.href}
+                                onClick={() => setActiveTab(item.name)}
+                                aria-current={activeTab === item.name ? 'page' : undefined}
                                 className={classNames(
-                                    item.current ? 'bg-gray-900 text-white font-semibold' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                    'rounded-md px-3 py-2 text-xl font-light',
+                                    activeTab === item.name ? 'bg-gray-900 text-white font-semibold' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                    'rounded-md px-3 py-2 text-xl font-light text-center', item.width,
                                 )}
                             >
                                 {item.name}
-                            </a>
+                            </Link>
                         ))}
                     </div>
                 </div>
