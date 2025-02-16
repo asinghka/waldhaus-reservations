@@ -25,7 +25,7 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
 
             const filteredReservations = data.filter((reservation) => {
                 const reservationDate = new Date(reservation.date)
-                return reservationDate === filterDate;
+                return reservationDate === filterDate && !reservation.deleted;
             });
 
             setReservations(filteredReservations);
