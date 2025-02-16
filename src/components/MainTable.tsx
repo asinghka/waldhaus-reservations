@@ -15,7 +15,7 @@ export default function MainTable() {
                     <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                         <div className="overflow-hidden ring-1 shadow-sm ring-black/5 sm:rounded-lg">
                             <table className="min-w-full divide-y divide-gray-300">
-                                <thead className="bg-gray-50">
+                                <thead className="bg-gray-100">
                                 <tr>
                                     <th scope="col" className="py-3.5 pr-3 pl-4 text-xl font-semibold text-gray-900 sm:pl-6 w-1/5">
                                         Name
@@ -41,7 +41,7 @@ export default function MainTable() {
                                         return time < 17
                                     })
                                     .map((person) => (
-                                    <tr key={person.name}>
+                                    <tr key={person.name} className="hover:bg-gray-50">
                                         <td className="py-4 pr-3 pl-4 text-xl text-center font-medium whitespace-nowrap text-gray-900 sm:pl-6">
                                             {person.name}
                                         </td>
@@ -70,7 +70,7 @@ export default function MainTable() {
                                         return time >= 17
                                     })
                                     .map((person) => (
-                                        <tr key={person.name}>
+                                        <tr key={person.name} className="hover:bg-gray-50">
                                             <td className="py-4 pr-3 pl-4 text-xl text-center font-medium whitespace-nowrap text-gray-900 sm:pl-6">
                                                 {person.name}
                                             </td>
