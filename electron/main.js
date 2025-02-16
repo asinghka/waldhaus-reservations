@@ -1,9 +1,36 @@
-import {app, BrowserWindow} from "electron";
+import {app, BrowserWindow, ipcMain} from 'electron';
 import {fileURLToPath} from 'url'
-import path from "node:path";
+import sqlite3 from "sqlite3";
+import {open} from 'sqlite'
+import path from 'node:path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const isDev = !app.isPackaged;
+
+// Get the path to the user data directory
+const userDataPath = app.getPath('userData');
+const dbPath = path.join(userDataPath, 'database.sqlite');
+
+const db = await open({
+    filename: path.join(__dirname, 'database.sqlite'),
+    driver: sqlite3.Database,
+})
+
+await db.exec(`
+    CREATE TABLE IF NOT EXISTS reservations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        date DATE NOT NULL,
+        count INTEGER NOT NULL,
+        contact TEXT,
+        notes TEXT,
+        deleted BOOLEAN DEFAULT FALSE
+    )
+`);
+
+ipcMain.handle('get-reservations', async () => {
+    return await db.all('SELECT * FROM reservations');
+});
 
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
