@@ -41,7 +41,7 @@ export default function MainTable() {
                                         return time < 17
                                     })
                                     .map((person) => (
-                                    <tr key={person.name} className="hover:bg-gray-50">
+                                    <tr key={person.name} className="hover:bg-gray-50 cursor-pointer">
                                         <td className="py-4 pr-3 pl-4 text-xl text-center font-medium whitespace-nowrap text-gray-900 sm:pl-6">
                                             {person.name}
                                         </td>
@@ -70,7 +70,7 @@ export default function MainTable() {
                                         return time >= 17
                                     })
                                     .map((person) => (
-                                        <tr key={person.name} className="hover:bg-gray-50">
+                                        <tr key={person.name} className="hover:bg-gray-50 cursor-pointer">
                                             <td className="py-4 pr-3 pl-4 text-xl text-center font-medium whitespace-nowrap text-gray-900 sm:pl-6">
                                                 {person.name}
                                             </td>

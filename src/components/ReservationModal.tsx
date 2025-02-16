@@ -1,6 +1,7 @@
 'use client'
 
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
+import {XMarkIcon} from "@heroicons/react/16/solid";
 
 export default function ReservationModal( { open, setOpen }: { open: boolean, setOpen: (open: boolean) => void }) {
     return (
@@ -17,9 +18,10 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                         className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-3xl data-closed:sm:translate-y-0 data-closed:sm:scale-95"
                     >
                         <div className="bg-gray-800 px-4 py-3 sm:flex sm:px-6 pt-6 pb-6">
-                            <DialogTitle as="h3" className=" text-2xl font-semibold text-white ">
+                            <DialogTitle as="h3" className="ml-4 text-2xl font-semibold text-white ">
                                 Neue Reservierung
                             </DialogTitle>
+                            <XMarkIcon className="size-8 text-white ml-auto cursor-pointer" onClick={() => setOpen(false)}/>
                         </div>
                         <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                             <div className="sm:flex sm:items-start">
@@ -90,6 +92,7 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                                                     id="contact"
                                                     name="contact"
                                                     type="text"
+                                                    placeholder="Telefonnummer / E-Mail"
                                                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                                 />
                                             </div>
@@ -105,6 +108,7 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                                                     id="about"
                                                     name="about"
                                                     rows={3}
+                                                    placeholder="Nebenzimmer, Hunde ..."
                                                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                                     defaultValue={''}
                                                 />
@@ -118,15 +122,14 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                             <button
                                 type="button"
                                 onClick={() => setOpen(false)}
-                                className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-blue-500 sm:ml-6 sm:mr-4 sm:w-auto"
+                                className="cursor-pointer inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-blue-500 sm:ml-6 sm:mr-4 sm:w-auto"
                             >
                                 Speichern
                             </button>
                             <button
                                 type="button"
-                                data-autofocus
                                 onClick={() => setOpen(false)}
-                                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-lg font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-100 sm:mt-0 sm:w-auto"
+                                className="cursor-pointer mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-lg font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-100 sm:mt-0 sm:w-auto"
                             >
                                 Abbrechen
                             </button>

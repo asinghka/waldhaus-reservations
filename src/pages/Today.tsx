@@ -2,6 +2,7 @@ import Header from "../components/Header.tsx";
 import MainTable from "../components/MainTable.tsx";
 import ReservationModal from "../components/ReservationModal.tsx";
 import * as React from "react";
+import {PlusCircleIcon} from "@heroicons/react/16/solid";
 
 export default function Today() {
     const [openModal, setOpenModal] = React.useState(false);
@@ -16,9 +17,12 @@ export default function Today() {
                             <button
                                 type="button"
                                 onClick={() => setOpenModal(true)}
-                                className="block rounded-md bg-blue-600 px-3 py-2 text-center text-lg font-regular text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                                className="cursor-pointer block rounded-md bg-blue-600 px-3 py-2 text-center text-lg font-regular text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                             >
-                                Neue Reservierung
+                                <div className="flex items-center justify-center">
+                                    Neue Reservierung
+                                    <PlusCircleIcon className="ml-2 size-6 text-white"/>
+                                </div>
                             </button>
                             <ReservationModal open={openModal} setOpen={setOpenModal}/>
                         </div>
