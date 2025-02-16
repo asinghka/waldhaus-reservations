@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 const navigation = [
     { name: 'Heute', href: '/today', width: 'w-30' },
     { name: 'Reservierungen', href: '/reservations', width: 'w-48' },
-    { name: 'Statistik', href: '/stats', width: 'w-36' },
+    { name: 'Statistik', href: '/stats', width: 'w-32' },
     { name: 'Admin', href: '/admin', width: 'w-30' },
 ]
 

@@ -1,4 +1,4 @@
-import {CheckIcon} from "@heroicons/react/16/solid";
+import {BookOpenIcon, CheckIcon, UsersIcon} from "@heroicons/react/16/solid";
 import Divider from "./Divider.tsx";
 import {useEffect, useState} from "react";
 
@@ -42,6 +42,32 @@ export default function MainTable() {
 
     return (
         <>
+            <div className="sm:flex sm:items-center">
+                <div className="mt-4 sm:mt-0 ml-auto mr-4">
+                    <button
+                        type="button"
+                        disabled={true}
+                        className="block rounded-md bg-gray-50 px-3 py-2 text-center text-lg font-regular shadow-xs outline-1 outline-gray-900"
+                    >
+                        <div className="flex items-center justify-center">
+                            <BookOpenIcon className="mr-2 size-6"/>
+                            2
+                        </div>
+                    </button>
+                </div>
+                <div className="mt-4 sm:mt-0">
+                    <button
+                        type="button"
+                        disabled={true}
+                        className="block rounded-md bg-gray-50 px-3 py-2 text-center text-lg font-regular shadow-xs outline-1 outline-gray-900"
+                    >
+                        <div className="flex items-center justify-center">
+                            <UsersIcon className="mr-2 size-6"/>
+                            6
+                        </div>
+                    </button>
+                </div>
+            </div>
             {
                 afternoonReservations.length > 0 &&
                 <div className="mt-8 flow-root">
