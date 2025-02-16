@@ -12,7 +12,7 @@ declare global {
     }
 }
 
-export default function MainTable( { filterDate } : { filterDate: Date }) {
+export default function ReservationTable({ filterDate } : { filterDate: Date }) {
     const [reservations, setReservations] = useState<{ id: number; name: string; date: string; count: number; contact: string; notes: string; deleted: boolean }[]>([]);
     const [openModal, setOpenModal] = React.useState(false);
 
