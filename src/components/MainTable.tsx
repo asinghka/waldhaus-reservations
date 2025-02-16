@@ -1,6 +1,8 @@
 import {BookOpenIcon, CheckIcon, UsersIcon} from "@heroicons/react/16/solid";
 import Divider from "./Divider.tsx";
 import {useEffect, useState} from "react";
+import ReservationModal from "./ReservationModal.tsx";
+import * as React from "react";
 
 declare global {
     interface Window {
@@ -12,6 +14,7 @@ declare global {
 
 export default function MainTable() {
     const [reservations, setReservations] = useState<{ id: number; name: string; date: string; count: number; contact: string; notes: string; deleted: boolean }[]>([]);
+    const [openModal, setOpenModal] = React.useState(false);
 
     const fetchReservations = async () => {
         try {
@@ -97,7 +100,7 @@ export default function MainTable() {
                                     <tbody className="divide-y divide-gray-200 bg-white">
                                     {afternoonReservations
                                         .map((reservation) => (
-                                            <tr key={reservation.name} className="hover:bg-gray-50 cursor-pointer">
+                                            <tr key={reservation.name} className="hover:bg-gray-50 cursor-pointer" onClick={() => setOpenModal(true)}>
                                                 <td className="py-4 pr-3 pl-4 text-xl text-center font-medium whitespace-nowrap text-gray-900 sm:pl-6">
                                                     {reservation.name}
                                                 </td>
@@ -149,7 +152,7 @@ export default function MainTable() {
                                     <tbody className="divide-y divide-gray-200 bg-white">
                                     {eveningReservations
                                         .map((reservation) => (
-                                            <tr key={reservation.name} className="hover:bg-gray-50 cursor-pointer">
+                                            <tr key={reservation.name} className="hover:bg-gray-50 cursor-pointer" onClick={() => setOpenModal(true)}>
                                                 <td className="py-4 pr-3 pl-4 text-xl text-center font-medium whitespace-nowrap text-gray-900 sm:pl-6">
                                                     {reservation.name}
                                                 </td>
@@ -166,6 +169,7 @@ export default function MainTable() {
                     </div>
                 </div>
             }
+            <ReservationModal open={openModal} setOpen={setOpenModal}/>
         </>
     )
 }
