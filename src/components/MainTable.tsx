@@ -32,7 +32,7 @@ export default function MainTable( { filterDate } : { filterDate: Date }) {
 
             let people = 0;
             let tables = 0;
-            for (const reservation of data) {
+            for (const reservation of filteredReservations) {
                 people += reservation.count;
                 tables += 1;
             }
