@@ -34,8 +34,8 @@ export default function NavBar() {
                                 onClick={() => setActiveTab(item.name)}
                                 aria-current={activeTab === item.name ? 'page' : undefined}
                                 className={classNames(
-                                    activeTab === item.name ? 'bg-gray-900 text-white font-semibold' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                    'rounded-md px-3 py-2 text-xl font-light text-center', item.width,
+                                    activeTab === item.name ? 'bg-gray-900 text-white font-semibold outline-2 outline-gray-600' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                    'rounded-md px-3 py-4 text-xl font-light text-center', item.width,
                                 )}
                             >
                                 {item.name}

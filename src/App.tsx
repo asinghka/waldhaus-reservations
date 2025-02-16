@@ -8,7 +8,7 @@ import {HashRouter as Router, Route, Routes, Navigate} from "react-router-dom";
 export default function App() {
     return (
         <>
-            <div className="min-h-full">
+            <div className="min-h-screen flex flex-col">
                 <Router>
                     <NavBar />
                     <Routes>

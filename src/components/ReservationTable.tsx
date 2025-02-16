@@ -65,32 +65,41 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
 
     return (
         <>
-            <div className="sm:flex sm:items-center">
-                <div className="mt-4 sm:mt-0 ml-auto mr-4">
-                    <button
-                        type="button"
-                        disabled={true}
-                        className="block rounded-md bg-gray-50 px-3 py-2 text-center text-lg font-regular shadow-xs outline-1 outline-gray-900"
-                    >
-                        <div className="flex items-center justify-center">
-                            <BookOpenIcon className="mr-2 size-6"/>
-                            {dayReservation}
+            {
+                reservations.length > 0 ? (
+                        <div className="sm:flex sm:items-center">
+                            <div className="mt-4 sm:mt-0 ml-auto mr-4">
+                                <button
+                                    type="button"
+                                    disabled={true}
+                                    className="block rounded-md bg-gray-50 px-3 py-2 text-center text-lg font-regular shadow-xs outline-1 outline-gray-900"
+                                >
+                                    <div className="flex items-center justify-center">
+                                        <BookOpenIcon className="mr-2 size-6"/>
+                                        {dayReservation}
+                                    </div>
+                                </button>
+                            </div>
+                            <div className="mt-4 sm:mt-0">
+                                <button
+                                    type="button"
+                                    disabled={true}
+                                    className="block rounded-md bg-gray-50 px-3 py-2 text-center text-lg font-regular shadow-xs outline-1 outline-gray-900"
+                                >
+                                    <div className="flex items-center justify-center">
+                                        <UsersIcon className="mr-2 size-6"/>
+                                        {dayCount}
+                                    </div>
+                                </button>
+                            </div>
                         </div>
-                    </button>
-                </div>
-                <div className="mt-4 sm:mt-0">
-                    <button
-                        type="button"
-                        disabled={true}
-                        className="block rounded-md bg-gray-50 px-3 py-2 text-center text-lg font-regular shadow-xs outline-1 outline-gray-900"
-                    >
-                        <div className="flex items-center justify-center">
-                            <UsersIcon className="mr-2 size-6"/>
-                            {dayCount}
-                        </div>
-                    </button>
-                </div>
-            </div>
+                    ) : (
+                    <div className="flex flex-row items-center justify-center opacity-20 pb-20">
+                        <h1 className="text-3xl mr-10">Keine Reservierungen vorhanden ...</h1>
+                        <img src="/assets/coffee.png" className="size-12 items-center"/>
+                    </div>
+                )
+            }
             {
                 afternoonReservations.length > 0 &&
                 <div className="mt-8 flow-root">
