@@ -12,6 +12,10 @@ declare global {
     }
 }
 
+function classNames(...classes: string[]) {
+    return classes.filter(Boolean).join(' ')
+}
+
 export default function ReservationTable({ filterDate } : { filterDate: Date }) {
     const [reservations, setReservations] = useState<{ id: number; name: string; date: string; count: number; contact: string; notes: string; deleted: boolean }[]>([]);
     const [openModal, setOpenModal] = React.useState(false);
@@ -151,7 +155,10 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
             }
             {
                 eveningReservations.length > 0 &&
-                <div className={afternoonReservations.length === 0 ? 'mt-8 flow-root' : 'flow-root'}>
+                <div className={classNames(
+                    afternoonReservations.length === 0 ? 'mt-8' : '',
+                    'flow-root'
+                )}>
                     <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                             <div className="overflow-hidden ring-1 shadow-sm ring-black/5 sm:rounded-lg">
