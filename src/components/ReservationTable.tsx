@@ -1,4 +1,4 @@
-import {BookOpenIcon, CheckIcon, UsersIcon} from "@heroicons/react/16/solid";
+import {BookOpenIcon, CheckIcon, PlusCircleIcon, UsersIcon} from "@heroicons/react/16/solid";
 import Divider from "./Divider.tsx";
 import {useEffect, useState} from "react";
 import ReservationModal from "./ReservationModal.tsx";
@@ -71,8 +71,8 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
         <>
             {
                 reservations.length > 0 ? (
-                        <div className="sm:flex sm:items-center">
-                            <div className="mt-4 sm:mt-0 ml-auto mr-4">
+                        <div className="sm:flex sm:items-center mr-auto">
+                            <div className="mt-4 sm:mt-0 mr-4">
                                 <button
                                     type="button"
                                     disabled={true}
@@ -96,6 +96,17 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                     </div>
                                 </button>
                             </div>
+                            <button
+                                type="button"
+                                onClick={() => setOpenModal(true)}
+                                className="cursor-pointer ml-auto block rounded-md bg-blue-600 px-3 py-2 text-center text-lg font-regular text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                            >
+                                <div className="flex items-center justify-center">
+                                    Neue Reservierung
+                                    <PlusCircleIcon className="ml-2 size-6 text-white"/>
+                                </div>
+                            </button>
+                            <ReservationModal open={openModal} setOpen={setOpenModal}/>
                         </div>
                     ) : (
                     <div className="flex flex-row items-center justify-center opacity-20 pb-20">

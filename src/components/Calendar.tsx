@@ -21,51 +21,6 @@ const months = [
     "Dezember",
 ]
 
-const days = [
-    { date: '2021-12-27' },
-    { date: '2021-12-28' },
-    { date: '2021-12-29' },
-    { date: '2021-12-30' },
-    { date: '2021-12-31' },
-    { date: '2022-01-01' },
-    { date: '2022-01-02' },
-    { date: '2022-01-03' },
-    { date: '2022-01-04' },
-    { date: '2022-01-05' },
-    { date: '2022-01-06' },
-    { date: '2022-01-07' },
-    { date: '2022-01-08' },
-    { date: '2022-01-09' },
-    { date: '2022-01-10' },
-    { date: '2022-01-11' },
-    { date: '2022-01-12' },
-    { date: '2022-01-13' },
-    { date: '2022-01-14' },
-    { date: '2022-01-15' },
-    { date: '2022-01-16' },
-    { date: '2022-01-17' },
-    { date: '2022-01-18' },
-    { date: '2022-01-19' },
-    { date: '2022-01-20' },
-    { date: '2022-01-21' },
-    { date: '2022-01-22' },
-    { date: '2022-01-23' },
-    { date: '2022-01-24' },
-    { date: '2022-01-25' },
-    { date: '2022-01-26' },
-    { date: '2022-01-27' },
-    { date: '2022-01-28' },
-    { date: '2022-01-29' },
-    { date: '2022-01-30' },
-    { date: '2022-01-31' },
-    { date: '2022-02-01' },
-    { date: '2022-02-02' },
-    { date: '2022-02-03' },
-    { date: '2022-02-04' },
-    { date: '2022-02-05' },
-    { date: '2022-02-06' },
-]
-
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
@@ -104,7 +59,7 @@ export default function Calendar() {
     const [selectedYear, setSelectedYear] = React.useState(new Date().getFullYear());
     const [selectedMonth, setSelectedMonth] = React.useState(new Date().getMonth());
     const [selectedDate, setSelectedDate] = React.useState(new Date());
-    const [today, setToday] = React.useState(new Date());
+    const [today] = React.useState(new Date());
 
     const [days, setDays] = React.useState(() => generateDays(selectedYear, selectedMonth));
 
@@ -125,7 +80,7 @@ export default function Calendar() {
                                     setDays(generateDays(selectedYear, selectedMonth - 1));
                                 }
                             }}
-                            className="-m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500 mr-auto"
+                            className="cursor-pointer -m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500 mr-auto"
                         >
                             <span className="sr-only">Previous month</span>
                             <ChevronLeftIcon className="size-5" aria-hidden="true" />
@@ -137,8 +92,10 @@ export default function Calendar() {
                                 onClick={() => {
                                     setSelectedMonth(new Date().getMonth());
                                     setSelectedYear(new Date().getFullYear());
+                                    setSelectedDate(new Date());
                                     setDays(generateDays(new Date().getFullYear(), new Date().getMonth()));
-                                }}>
+                                }}
+                                className="cursor-pointer">
                                 <ArrowPathIcon className="size-5 opacity-40"/>
                             </button>
                         </div>
@@ -154,7 +111,7 @@ export default function Calendar() {
                                     setDays(generateDays(selectedYear, selectedMonth + 1));
                                 }
                             }}
-                            className="-m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500 ml-auto"
+                            className="cursor-pointer -m-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500 ml-auto"
                         >
                             <span className="sr-only">Next month</span>
                             <ChevronRightIcon className="size-5" aria-hidden="true" />
@@ -172,10 +129,11 @@ export default function Calendar() {
                     <div className="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm ring-1 shadow-sm ring-gray-200">
                         {days.map((day, dayIdx) => (
                             <button
-                                key={day.toLocaleTimeString('de-DE')}
+                                key={day.getTime()}
                                 type="button"
                                 onClick={() => setSelectedDate(day)}
                                 className={classNames(
+                                    'cursor-pointer',
                                     'py-1.5 hover:bg-gray-100 focus:z-10',
                                     equalMonth(day, selectedMonth) ? 'bg-white' : 'bg-gray-100',
                                     equalDates(day, today) ? 'font-semibold' : '',
@@ -190,9 +148,9 @@ export default function Calendar() {
                                 )}
                             >
                                 <time
-                                    dateTime={day.toLocaleTimeString('de-DE')}
+                                    dateTime={day.getTime().toString()}
                                     className={classNames(
-                                        'mx-auto flex size-7 items-center justify-center rounded-full',
+                                        'cursor-pointer mx-auto flex size-7 items-center justify-center rounded-full',
                                         equalDates(day, today) ? 'bg-blue-200' : '',
                                         equalDates(day, selectedDate) ? 'bg-blue-600' : '',
                                     )}
@@ -205,7 +163,7 @@ export default function Calendar() {
                     <button
                         type="button"
                         onClick={() => setOpenModal(true)}
-                        className="mt-8 w-full rounded-md bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                        className="cursor-pointer mt-8 w-full rounded-md bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                     >
                         Neue Reservierung
                     </button>
