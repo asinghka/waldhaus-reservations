@@ -74,7 +74,7 @@ const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
 
     return (
         <>
-            <div className="flex flex-col flex-1 items-center">
+            <div className="flex flex-col">
                 <div className="text-center items-center w-80">
                     <div className="w-full flex text-gray-900">
                         <button

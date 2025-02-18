@@ -13,9 +13,15 @@ export default function Reservations() {
     return (
         <>
             <Header title="Reservierungen im Überblick"/>
-            <div className="flex flex-row flex-1 items-center">
-                <Calendar onDateSelect={handleDateChange}/>
-                <SimpleTable filterDate={selectedDate}/>
+            <div className="flex flex-1">
+                <div className="flex flex-row flex-1 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div className="flex pt-24 h-fit sticky top-10 self-start">
+                        <Calendar onDateSelect={handleDateChange}/>
+                    </div>
+                    <div className="flex flex-col flex-1 pt-6 px-10">
+                        <SimpleTable filterDate={selectedDate}/>
+                    </div>
+                </div>
             </div>
         </>
     );
