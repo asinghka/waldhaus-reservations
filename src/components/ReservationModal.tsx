@@ -26,7 +26,7 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                         <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                             <div className="sm:flex sm:items-start">
                                 <div className="mt-3 mb-3 text-center sm:mt-0 sm:ml-4 sm:mr-4 sm:text-left w-full ">
-                                    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12 w-full">
+                                    <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12 w-full">
                                         <div className="sm:col-span-4">
                                             <label htmlFor="name" className="block text-lg/6 font-medium text-gray-900">
                                                 Name
@@ -67,7 +67,7 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12">
+                                    <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12">
                                         <div className="sm:col-span-4">
                                             <label htmlFor="count" className="block text-lg/6 font-medium text-gray-900">
                                                 Anzahl
@@ -82,7 +82,7 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12">
+                                    <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12">
                                         <div className="sm:col-span-full">
                                             <label htmlFor="contact" className="block text-lg/6 font-medium text-gray-900">
                                                 Kontaktdaten
@@ -92,13 +92,12 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                                                     id="contact"
                                                     name="contact"
                                                     type="text"
-                                                    placeholder="Telefonnummer / E-Mail"
                                                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                                 />
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12">
+                                    <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12">
                                         <div className="col-span-full">
                                             <label htmlFor="about" className="block text-lg/6 font-medium text-gray-900">
                                                 Anmerkungen
@@ -108,7 +107,6 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                                                     id="about"
                                                     name="about"
                                                     rows={3}
-                                                    placeholder="Nebenzimmer, Hunde ..."
                                                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                                     defaultValue={''}
                                                 />

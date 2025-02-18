@@ -53,8 +53,8 @@ export function SimpleTable({ filterDate } : { filterDate: Date }) {
 
     return (
         <>
-            <div className="flex items-center ml-auto pb-6">
-                <div className="mt-4 sm:mt-0 mr-4">
+            <div className="flex flow-row pb-6 px-1 ml-auto">
+                <div className="mr-4">
                     <button
                         type="button"
                         disabled={true}
@@ -66,22 +66,20 @@ export function SimpleTable({ filterDate } : { filterDate: Date }) {
                         </div>
                     </button>
                 </div>
-                <div className="mt-4 sm:mt-0">
-                    <button
-                        type="button"
-                        disabled={true}
-                        className="block rounded-md bg-gray-50 px-3 py-2 text-center text-lg font-regular shadow-xs outline-1 outline-gray-900"
-                    >
-                        <div className="flex items-center justify-center">
-                            <UsersIcon className="mr-2 size-6"/>
-                            {dayCount}
-                        </div>
-                    </button>
-                </div>
+                <button
+                    type="button"
+                    disabled={true}
+                    className="block rounded-md bg-gray-50 px-3 py-2 text-center text-lg font-regular shadow-xs outline-1 outline-gray-900"
+                >
+                    <div className="flex items-center justify-center">
+                        <UsersIcon className="mr-2 size-6"/>
+                        {dayCount}
+                    </div>
+                </button>
             </div>
-            <div className="flex flex-col flex-1 pb-24">
-                <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            <div className="flex flex-col pl-6">
+                <div className="overflow-x-auto">
+                    <div className="inline-block min-w-full px-1 py-2 align-middle">
                         <div className="overflow-hidden ring-1 shadow-sm ring-black/5 rounded-lg">
                             <table className="min-w-full divide-y divide-gray-300">
                                 <thead className="bg-gray-100">

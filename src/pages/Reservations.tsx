@@ -18,7 +18,7 @@ export default function Reservations() {
                     <div className="flex pt-24 h-fit sticky top-10 self-start">
                         <Calendar onDateSelect={handleDateChange}/>
                     </div>
-                    <div className="flex flex-col flex-1 pt-6 px-10">
+                    <div className="flex flex-col flex-1 pt-6">
                         <SimpleTable filterDate={selectedDate}/>
                     </div>
                 </div>
