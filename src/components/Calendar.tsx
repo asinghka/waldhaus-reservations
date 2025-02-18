@@ -5,6 +5,7 @@ import {
 } from '@heroicons/react/20/solid'
 import ReservationModal from "./ReservationModal.tsx";
 import * as React from "react";
+import {useEffect} from "react";
 
 const months = [
     "Januar",
@@ -25,7 +26,11 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Calendar() {
+interface CalendarProps {
+    onDateSelect: (date: Date) => void;  // Correct type for onDateSelect
+}
+
+const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
     const [openModal, setOpenModal] = React.useState(false);
 
     function equalDates(date1: Date, date2: Date) {
@@ -62,6 +67,10 @@ export default function Calendar() {
     const [today] = React.useState(new Date());
 
     const [days, setDays] = React.useState(() => generateDays(selectedYear, selectedMonth));
+
+    useEffect(() => {
+        onDateSelect(selectedDate);
+    }, [selectedDate, onDateSelect]);
 
     return (
         <>
@@ -118,13 +127,13 @@ export default function Calendar() {
                         </button>
                     </div>
                     <div className="mt-6 grid grid-cols-7 text-xs/6 text-gray-500">
-                        <div>M</div>
-                        <div>T</div>
-                        <div>W</div>
-                        <div>T</div>
-                        <div>F</div>
-                        <div>S</div>
-                        <div>S</div>
+                        <div>Mo</div>
+                        <div>Di</div>
+                        <div>Mi</div>
+                        <div>Do</div>
+                        <div>Fr</div>
+                        <div>Sa</div>
+                        <div>So</div>
                     </div>
                     <div className="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm ring-1 shadow-sm ring-gray-200">
                         {days.map((day, dayIdx) => (
@@ -173,3 +182,5 @@ export default function Calendar() {
         </>
     )
 }
+
+export default Calendar;
