@@ -6,6 +6,7 @@ import {
 import ReservationModal from "./ReservationModal.tsx";
 import * as React from "react";
 import {useEffect} from "react";
+import {PlusCircleIcon} from "@heroicons/react/16/solid";
 
 const months = [
     "Januar",
@@ -26,11 +27,7 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-interface CalendarProps {
-    onDateSelect: (date: Date) => void;  // Correct type for onDateSelect
-}
-
-const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
+export default function Calendar({ onDateSelect }: { onDateSelect: (date: Date) => void }) {
     const [openModal, setOpenModal] = React.useState(false);
 
     function equalDates(date1: Date, date2: Date) {
@@ -174,7 +171,10 @@ const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
                         onClick={() => setOpenModal(true)}
                         className="cursor-pointer mt-8 w-full rounded-md bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                     >
-                        Neue Reservierung
+                        <div className="flex items-center justify-center">
+                            Neue Reservierung
+                            <PlusCircleIcon className="ml-2 size-6 text-white"/>
+                        </div>
                     </button>
                 </div>
             </div>
@@ -182,5 +182,3 @@ const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
         </>
     )
 }
-
-export default Calendar;
