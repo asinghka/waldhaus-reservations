@@ -3,6 +3,7 @@ import Divider from "./Divider.tsx";
 import {useEffect, useState} from "react";
 import ReservationModal from "./ReservationModal.tsx";
 import * as React from "react";
+import {Reservation} from "../types/types";
 
 declare global {
     interface Window {
@@ -17,7 +18,10 @@ function classNames(...classes: string[]) {
 }
 
 export default function ReservationTable({ filterDate } : { filterDate: Date }) {
-    const [reservations, setReservations] = useState<{ id: number; name: string; date: string; count: number; contact: string; notes: string; deleted: boolean }[]>([]);
+    const [reservations, setReservations] = useState<Reservation[]>([]);
+
+    const [readOnly, setReadOnly] = useState<boolean>(false);
+    const [selectedReservation, setSelectedReservation] = useState<Reservation | null>(null);
     const [openModal, setOpenModal] = React.useState(false);
 
     const [dayCount, setDayCount] = useState<number>(0);
@@ -52,9 +56,15 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
         }
     }
 
+    const handleEditReservation = (reservation: Reservation) => {
+        setReadOnly(true);
+        setSelectedReservation(reservation);
+        setOpenModal(true);
+    }
+
     useEffect(() => {
         fetchReservations().catch(error => console.error('Error fetching reservations:', error));
-    }, []);
+    }, [filterDate]);
 
     const afternoonReservations = reservations.filter(
         (reservation) => {
@@ -85,7 +95,6 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                     <PlusCircleIcon className="ml-2 size-6 text-white"/>
                                 </div>
                             </button>
-                            <ReservationModal open={openModal} setOpen={setOpenModal}/>
                             <div className="mt-4 sm:mt-0 mr-4">
                                 <button
                                     type="button"
@@ -128,7 +137,6 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                         <PlusCircleIcon className="ml-2 size-6 text-white"/>
                                     </div>
                                 </button>
-                                <ReservationModal open={openModal} setOpen={setOpenModal}/>
                             </div>
                         </div>
                 )
@@ -161,7 +169,7 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                 <tbody className="divide-y divide-gray-200 bg-white">
                                 {afternoonReservations
                                     .map((reservation) => (
-                                        <tr key={reservation.name + reservation.date} className="hover:bg-gray-50 cursor-pointer" onClick={() => setOpenModal(true)}>
+                                        <tr key={reservation.name + reservation.date} className="hover:bg-gray-50 cursor-pointer" onClick={() => handleEditReservation(reservation)}>
                                             <td className="py-4 pr-3 pl-4 text-xl text-center font-medium whitespace-nowrap text-gray-900 sm:pl-6 w-3/10">
                                                 {reservation.name}
                                             </td>
@@ -206,7 +214,7 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                             <th scope="col" className="px-3 py-3.5 text-xl font-semibold text-gray-900 w-1/5">
                                                 Anzahl
                                             </th>
-                                            <th scope="col" className="px-3 py-3.5 text-lg font-semibold text-gray-900 w-1/5">
+                                            <th scope="col" className="px-3 py-3.5 text-xl font-semibold text-gray-900 w-1/5">
                                                 Anmerkung
                                             </th>
                                         </tr>
@@ -215,7 +223,7 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                     <tbody className="divide-y divide-gray-200 bg-white">
                                     {eveningReservations
                                         .map((reservation) => (
-                                            <tr key={reservation.name + reservation.date} className="hover:bg-gray-50 cursor-pointer" onClick={() => setOpenModal(true)}>
+                                            <tr key={reservation.name + reservation.date} className="hover:bg-gray-50 cursor-pointer" onClick={() => handleEditReservation(reservation)}>
                                                 <td className="py-4 pr-3 pl-4 text-xl text-center font-medium whitespace-nowrap text-gray-900 sm:pl-6">
                                                     {reservation.name}
                                                 </td>
@@ -232,7 +240,7 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                     </div>
                 </div>
             }
-            <ReservationModal open={openModal} setOpen={setOpenModal}/>
+            <ReservationModal open={openModal} setOpen={setOpenModal} reservation={selectedReservation} readOnly={readOnly}/>
         </>
     )
 }

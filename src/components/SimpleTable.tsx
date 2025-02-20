@@ -2,6 +2,7 @@ import {BookOpenIcon, CheckIcon, UsersIcon} from "@heroicons/react/16/solid";
 import * as React from "react";
 import ReservationModal from "./ReservationModal.tsx";
 import {useEffect, useState} from "react";
+import {Reservation} from "../types/types";
 
 declare global {
     interface Window {
@@ -12,7 +13,10 @@ declare global {
 }
 
 export function SimpleTable({ filterDate } : { filterDate: Date }) {
-    const [reservations, setReservations] = useState<{ id: number; name: string; date: string; count: number; contact: string; notes: string; deleted: boolean }[]>([]);
+    const [reservations, setReservations] = useState<Reservation[]>([]);
+
+    const [readOnly, setReadOnly] = useState<boolean>(false);
+    const [selectedReservation, setSelectedReservation] = useState<Reservation | null>(null);
     const [openModal, setOpenModal] = React.useState(false);
 
     const [dayCount, setDayCount] = useState<number>(0);
@@ -45,6 +49,12 @@ export function SimpleTable({ filterDate } : { filterDate: Date }) {
         } catch (error) {
             console.error("Error fetching reservations:", error);
         }
+    }
+
+    const handleEditReservation = (reservation: Reservation) => {
+        setReadOnly(true);
+        setSelectedReservation(reservation);
+        setOpenModal(true);
     }
 
     useEffect(() => {
@@ -104,7 +114,7 @@ export function SimpleTable({ filterDate } : { filterDate: Date }) {
                                 <tbody className="divide-y divide-gray-200 bg-white">
                                 {reservations
                                     .map((reservation) => (
-                                        <tr key={reservation.name + reservation.date} className="hover:bg-gray-50 cursor-pointer" onClick={() => setOpenModal(true)}>
+                                        <tr key={reservation.name + reservation.date} className="hover:bg-gray-50 cursor-pointer" onClick={() => handleEditReservation(reservation)}>
                                             <td className="text-xl text-center font-medium whitespace-nowrap text-gray-900 w-3/10">
                                                 {reservation.name}
                                             </td>
@@ -120,7 +130,7 @@ export function SimpleTable({ filterDate } : { filterDate: Date }) {
                     </div>
                 </div>
             </div>
-            <ReservationModal open={openModal} setOpen={setOpenModal}/>
+            <ReservationModal open={openModal} setOpen={setOpenModal} reservation={selectedReservation} readOnly={readOnly}/>
         </>
     )
 }

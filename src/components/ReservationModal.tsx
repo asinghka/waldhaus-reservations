@@ -2,8 +2,22 @@
 
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import {XMarkIcon} from "@heroicons/react/16/solid";
+import {Reservation} from "../types/types";
+import {useEffect, useState} from "react";
 
-export default function ReservationModal( { open, setOpen }: { open: boolean, setOpen: (open: boolean) => void }) {
+function classNames(...classes: string[]) {
+    return classes.filter(Boolean).join(' ')
+}
+
+export default function ReservationModal( { open, setOpen, reservation, readOnly = false }: { open: boolean, setOpen: (open: boolean) => void, reservation: Reservation | null, readOnly: boolean } ) {
+    const [editMode, setEditMode] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (reservation) {
+            setEditMode(true);
+        }
+    }, [reservation]);
+
     return (
         <Dialog open={open} onClose={() => setOpen(false)} className="relative z-10">
             <DialogBackdrop
@@ -19,7 +33,7 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                     >
                         <div className="bg-gray-800 px-4 py-3 sm:flex sm:px-6 pt-6 pb-6">
                             <DialogTitle as="h3" className="ml-4 text-2xl font-semibold text-white ">
-                                Neue Reservierung
+                                {editMode ? "Reservierung bearbeiten" : "Neue Reservierung"}
                             </DialogTitle>
                             <XMarkIcon className="size-8 text-white ml-auto cursor-pointer" onClick={() => setOpen(false)}/>
                         </div>
@@ -36,7 +50,12 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                                                     id="name"
                                                     name="name"
                                                     type="text"
-                                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                                    readOnly={readOnly}
+                                                    value={reservation ? reservation.name : ''}
+                                                    className={classNames(
+                                                        readOnly ? "bg-gray-200" : "bg-white",
+                                                        "block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                                                    )}
                                                 />
                                             </div>
                                         </div>
@@ -49,7 +68,12 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                                                     id="date"
                                                     name="date"
                                                     type="text"
-                                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                                    readOnly={readOnly}
+                                                    value={reservation ? new Date(reservation.date).toLocaleDateString('de-DE', { month: '2-digit', day: '2-digit', year: '2-digit' }) : ''}
+                                                    className={classNames(
+                                                        readOnly ? "bg-gray-200" : "bg-white",
+                                                        "block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                                                    )}
                                                 />
                                             </div>
                                         </div>
@@ -62,7 +86,12 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                                                     id="time"
                                                     name="time"
                                                     type="text"
-                                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                                    readOnly={readOnly}
+                                                    value={reservation ? new Date(reservation.date).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', hour12: false }) : ''}
+                                                    className={classNames(
+                                                        readOnly ? "bg-gray-200" : "bg-white",
+                                                        "block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                                                    )}
                                                 />
                                             </div>
                                         </div>
@@ -77,7 +106,12 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                                                     id="count"
                                                     name="count"
                                                     type="text"
-                                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                                    readOnly={readOnly}
+                                                    value={reservation ? reservation.count : ''}
+                                                    className={classNames(
+                                                        readOnly ? "bg-gray-200" : "bg-white",
+                                                        "block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                                                    )}
                                                 />
                                             </div>
                                         </div>
@@ -92,7 +126,12 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                                                     id="contact"
                                                     name="contact"
                                                     type="text"
-                                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                                    readOnly={readOnly}
+                                                    value={reservation ? reservation.contact : ''}
+                                                    className={classNames(
+                                                        readOnly ? "bg-gray-200" : "bg-white",
+                                                        "block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                                                    )}
                                                 />
                                             </div>
                                         </div>
@@ -107,7 +146,12 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                                                     id="about"
                                                     name="about"
                                                     rows={3}
-                                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                                    readOnly={readOnly}
+                                                    value={reservation ? reservation.notes : ''}
+                                                    className={classNames(
+                                                        readOnly ? "bg-gray-200" : "bg-white",
+                                                        "block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                                                    )}
                                                     defaultValue={''}
                                                 />
                                             </div>
@@ -117,13 +161,26 @@ export default function ReservationModal( { open, setOpen }: { open: boolean, se
                             </div>
                         </div>
                         <div className="bg-gray-100 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 pt-6 pb-6">
-                            <button
-                                type="button"
-                                onClick={() => setOpen(false)}
-                                className="cursor-pointer inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-blue-500 sm:ml-6 sm:mr-4 sm:w-auto"
-                            >
-                                Speichern
-                            </button>
+                            {
+                                readOnly ? (
+                                    <button
+                                        type="button"
+                                        onClick={() => setOpen(false)}
+                                        className="cursor-pointer inline-flex w-full justify-center rounded-md bg-yellow-400 px-3 py-2 text-lg font-semibold text-gray-900 shadow-xs hover:bg-yellow-300 sm:ml-6 sm:mr-4 sm:w-auto"
+                                    >
+                                        Bearbeiten
+                                    </button>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        onClick={() => setOpen(false)}
+                                        className="cursor-pointer inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-blue-500 sm:ml-6 sm:mr-4 sm:w-auto"
+                                    >
+                                        Speichern
+                                    </button>
+                                )
+                            }
+
                             <button
                                 type="button"
                                 onClick={() => setOpen(false)}
