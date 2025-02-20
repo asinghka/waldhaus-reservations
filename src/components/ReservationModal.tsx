@@ -9,14 +9,30 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function ReservationModal( { open, setOpen, reservation, readOnly = false }: { open: boolean, setOpen: (open: boolean) => void, reservation: Reservation | null, readOnly: boolean } ) {
+export default function ReservationModal( { open, setOpen, reservation }: { open: boolean, setOpen: (open: boolean) => void, reservation: Reservation | null } ) {
     const [editMode, setEditMode] = useState<boolean>(false);
+    const [readOnly, setReadOnly] = useState<boolean>(false);
+
+    const [name, setName] = useState<string>('');
+    const [date, setDate] = useState<string>('');
+    const [time, setTime] = useState<string>('');
+    const [count, setCount] = useState<string>('');
+    const [contact, setContact] = useState<string>('');
+    const [notes, setNotes] = useState<string>('');
 
     useEffect(() => {
         if (reservation) {
             setEditMode(true);
+            setReadOnly(true);
+
+            setName(reservation.name);
+            setDate(new Date(reservation.date).toLocaleDateString('de-DE', { month: '2-digit', day: '2-digit', year: '2-digit' }));
+            setTime(new Date(reservation.date).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', hour12: false }))
+            setCount(reservation.count.toString());
+            setContact(reservation.contact);
+            setNotes(reservation.notes);
         }
-    }, [reservation]);
+    }, [open]);
 
     return (
         <Dialog open={open} onClose={() => setOpen(false)} className="relative z-10">
@@ -51,7 +67,8 @@ export default function ReservationModal( { open, setOpen, reservation, readOnly
                                                     name="name"
                                                     type="text"
                                                     readOnly={readOnly}
-                                                    value={reservation ? reservation.name : ''}
+                                                    value={name}
+                                                    onChange={(e) => setName(e.target.value)}
                                                     className={classNames(
                                                         readOnly ? "bg-gray-200" : "bg-white",
                                                         "block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
@@ -69,7 +86,8 @@ export default function ReservationModal( { open, setOpen, reservation, readOnly
                                                     name="date"
                                                     type="text"
                                                     readOnly={readOnly}
-                                                    value={reservation ? new Date(reservation.date).toLocaleDateString('de-DE', { month: '2-digit', day: '2-digit', year: '2-digit' }) : ''}
+                                                    value={date}
+                                                    onChange={(e) => setDate(e.target.value)}
                                                     className={classNames(
                                                         readOnly ? "bg-gray-200" : "bg-white",
                                                         "block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
@@ -87,7 +105,8 @@ export default function ReservationModal( { open, setOpen, reservation, readOnly
                                                     name="time"
                                                     type="text"
                                                     readOnly={readOnly}
-                                                    value={reservation ? new Date(reservation.date).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', hour12: false }) : ''}
+                                                    value={time}
+                                                    onChange={(e) => setTime(e.target.value)}
                                                     className={classNames(
                                                         readOnly ? "bg-gray-200" : "bg-white",
                                                         "block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
@@ -107,7 +126,9 @@ export default function ReservationModal( { open, setOpen, reservation, readOnly
                                                     name="count"
                                                     type="text"
                                                     readOnly={readOnly}
-                                                    value={reservation ? reservation.count : ''}
+                                                    value={count}
+                                                    min={1}
+                                                    onChange={(e) => setCount(e.target.value)}
                                                     className={classNames(
                                                         readOnly ? "bg-gray-200" : "bg-white",
                                                         "block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
@@ -127,7 +148,8 @@ export default function ReservationModal( { open, setOpen, reservation, readOnly
                                                     name="contact"
                                                     type="text"
                                                     readOnly={readOnly}
-                                                    value={reservation ? reservation.contact : ''}
+                                                    value={contact}
+                                                    onChange={(e) => setContact(e.target.value)}
                                                     className={classNames(
                                                         readOnly ? "bg-gray-200" : "bg-white",
                                                         "block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
@@ -147,7 +169,8 @@ export default function ReservationModal( { open, setOpen, reservation, readOnly
                                                     name="about"
                                                     rows={3}
                                                     readOnly={readOnly}
-                                                    value={reservation ? reservation.notes : ''}
+                                                    value={notes}
+                                                    onChange={(e) => setNotes(e.target.value)}
                                                     className={classNames(
                                                         readOnly ? "bg-gray-200" : "bg-white",
                                                         "block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
@@ -164,8 +187,8 @@ export default function ReservationModal( { open, setOpen, reservation, readOnly
                                 readOnly ? (
                                     <button
                                         type="button"
-                                        onClick={() => setOpen(false)}
-                                        className="cursor-pointer inline-flex w-full justify-center rounded-md bg-yellow-400 px-3 py-2 text-lg font-semibold text-gray-900 shadow-xs hover:bg-yellow-300 sm:ml-6 sm:mr-4 sm:w-auto"
+                                        onClick={() => setReadOnly(false)}
+                                        className="cursor-pointer inline-flex w-36 justify-center rounded-md bg-yellow-400 px-3 py-2 text-lg font-semibold text-gray-900 shadow-xs hover:bg-yellow-300 ml-6 mr-4"
                                     >
                                         Bearbeiten
                                     </button>
@@ -173,7 +196,7 @@ export default function ReservationModal( { open, setOpen, reservation, readOnly
                                     <button
                                         type="button"
                                         onClick={() => setOpen(false)}
-                                        className="cursor-pointer inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-blue-500 sm:ml-6 sm:mr-4 sm:w-auto"
+                                        className="cursor-pointer inline-flex w-36 justify-center rounded-md bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-blue-500 ml-6 mr-4"
                                     >
                                         Speichern
                                     </button>
@@ -183,7 +206,7 @@ export default function ReservationModal( { open, setOpen, reservation, readOnly
                             <button
                                 type="button"
                                 onClick={() => setOpen(false)}
-                                className="cursor-pointer mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-lg font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-100 sm:mt-0 sm:w-auto"
+                                className="cursor-pointer inline-flex w-36 justify-center rounded-md bg-white px-3 py-2 text-lg font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-100 ml-6 mr-4"
                             >
                                 Abbrechen
                             </button>

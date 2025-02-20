@@ -20,7 +20,6 @@ function classNames(...classes: string[]) {
 export default function ReservationTable({ filterDate } : { filterDate: Date }) {
     const [reservations, setReservations] = useState<Reservation[]>([]);
 
-    const [readOnly, setReadOnly] = useState<boolean>(false);
     const [selectedReservation, setSelectedReservation] = useState<Reservation | null>(null);
     const [openModal, setOpenModal] = React.useState(false);
 
@@ -57,7 +56,6 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
     }
 
     const handleEditReservation = (reservation: Reservation) => {
-        setReadOnly(true);
         setSelectedReservation(reservation);
         setOpenModal(true);
     }
@@ -167,7 +165,8 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                 </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200 bg-white">
-                                {afternoonReservations
+                                {
+                                    afternoonReservations
                                     .map((reservation) => (
                                         <tr key={reservation.name + reservation.date} className="hover:bg-gray-50 cursor-pointer" onClick={() => handleEditReservation(reservation)}>
                                             <td className="py-4 pr-3 pl-4 text-xl text-center font-medium whitespace-nowrap text-gray-900 sm:pl-6 w-3/10">
@@ -221,7 +220,8 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                         </thead>
                                     }
                                     <tbody className="divide-y divide-gray-200 bg-white">
-                                    {eveningReservations
+                                    {
+                                        eveningReservations
                                         .map((reservation) => (
                                             <tr key={reservation.name + reservation.date} className="hover:bg-gray-50 cursor-pointer" onClick={() => handleEditReservation(reservation)}>
                                                 <td className="py-4 pr-3 pl-4 text-xl text-center font-medium whitespace-nowrap text-gray-900 sm:pl-6">
@@ -240,7 +240,7 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                     </div>
                 </div>
             }
-            <ReservationModal open={openModal} setOpen={setOpenModal} reservation={selectedReservation} readOnly={readOnly}/>
+            <ReservationModal open={openModal} setOpen={setOpenModal} reservation={selectedReservation} />
         </>
     )
 }

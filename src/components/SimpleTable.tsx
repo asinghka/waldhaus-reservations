@@ -15,7 +15,6 @@ declare global {
 export function SimpleTable({ filterDate } : { filterDate: Date }) {
     const [reservations, setReservations] = useState<Reservation[]>([]);
 
-    const [readOnly, setReadOnly] = useState<boolean>(false);
     const [selectedReservation, setSelectedReservation] = useState<Reservation | null>(null);
     const [openModal, setOpenModal] = React.useState(false);
 
@@ -52,7 +51,6 @@ export function SimpleTable({ filterDate } : { filterDate: Date }) {
     }
 
     const handleEditReservation = (reservation: Reservation) => {
-        setReadOnly(true);
         setSelectedReservation(reservation);
         setOpenModal(true);
     }
@@ -130,7 +128,7 @@ export function SimpleTable({ filterDate } : { filterDate: Date }) {
                     </div>
                 </div>
             </div>
-            <ReservationModal open={openModal} setOpen={setOpenModal} reservation={selectedReservation} readOnly={readOnly}/>
+            <ReservationModal open={openModal} setOpen={setOpenModal} reservation={selectedReservation} />
         </>
     )
 }
