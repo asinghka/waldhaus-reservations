@@ -32,6 +32,38 @@ ipcMain.handle('get-reservations', async () => {
     return await db.all('SELECT * FROM reservations');
 });
 
+ipcMain.handle('save-reservation', (event, reservation) => {
+    console.log(reservation);
+
+    const { id, name, date, count, contact, notes, deleted } = reservation;
+
+    db.run(
+        `
+        INSERT INTO reservations (name, date, count, contact, notes)
+        VALUES (?, ?, ?, ?, ?)
+        `,
+        [name, date, count, contact, notes]
+    );
+})
+
+ipcMain.handle('update-reservation', (event, reservation) => {
+    const { id, name, date, count, contact, notes, deleted } = reservation;
+
+    db.run(
+        `
+        UPDATE reservations
+        SET name = ?,
+            date = ?,
+            count = ?,
+            contact = ?,
+            notes = ?,
+            deleted = ?
+        WHERE id = ?
+        `,
+        [name, date, count, contact, notes, deleted, id]
+    );
+})
+
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
         width: 1920,

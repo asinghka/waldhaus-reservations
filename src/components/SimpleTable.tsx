@@ -4,14 +4,6 @@ import ReservationModal from "./ReservationModal.tsx";
 import {useEffect, useState} from "react";
 import {Reservation} from "../types/types";
 
-declare global {
-    interface Window {
-        electron: {
-            getReservations: () => Promise<{ id: number; name: string; date: string; count: number; contact: string; notes: string; deleted: boolean }[]>;
-        };
-    }
-}
-
 export function SimpleTable({ filterDate } : { filterDate: Date }) {
     const [reservations, setReservations] = useState<Reservation[]>([]);
 
@@ -128,7 +120,7 @@ export function SimpleTable({ filterDate } : { filterDate: Date }) {
                     </div>
                 </div>
             </div>
-            <ReservationModal open={openModal} setOpen={setOpenModal} reservation={selectedReservation} />
+            <ReservationModal open={openModal} setOpen={setOpenModal} reservation={selectedReservation} inputDate={null} />
         </>
     )
 }

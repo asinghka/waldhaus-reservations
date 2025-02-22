@@ -18,24 +18,28 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
     const [editMode, setEditMode] = useState<boolean>(false);
     const [readOnly, setReadOnly] = useState<boolean>(false);
 
+    const [id, setId] = useState<number | null>(null);
     const [name, setName] = useState<string>('');
-    const [date, setDate] = useState<Dayjs | null>(dayjs());
-    const [time, setTime] = useState<Dayjs | null>(dayjs().hour(18).minute(0).second(0));
+    const [date, setDate] = useState<Dayjs>(dayjs());
+    const [time, setTime] = useState<Dayjs>(dayjs().hour(18).minute(0).second(0));
     const [count, setCount] = useState<string>('2');
     const [contact, setContact] = useState<string>('');
     const [notes, setNotes] = useState<string>('');
+    const [deleted, setDeleted] = useState<boolean>(false);
 
     useEffect(() => {
         if (reservation) {
             setEditMode(true);
             setReadOnly(true);
 
+            setId(reservation.id);
             setName(reservation.name);
             setDate(dayjs(reservation.date));
             setTime(dayjs(reservation.date))
             setCount(reservation.count.toString());
             setContact(reservation.contact);
             setNotes(reservation.notes);
+            setDeleted(reservation.deleted);
 
         } else if (inputDate) {
             setName('');
@@ -44,6 +48,7 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
             setCount('2');
             setContact('');
             setNotes('');
+            setDeleted(false);
 
         } else {
             setName('');
@@ -52,8 +57,56 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
             setCount('2');
             setContact('');
             setNotes('');
+            setDeleted(false);
         }
     }, [open]);
+
+    const handleSave = async () => {
+        if (id) {
+            const dateToSave = date.toDate();
+            const timeToSave = time.toDate();
+
+            const resultDate = new Date(dateToSave);
+            resultDate.setHours(timeToSave.getHours());
+            resultDate.setMinutes(timeToSave.getMinutes());
+            resultDate.setSeconds(0);
+
+            const reservationToSave: Reservation = {
+                id: id,
+                name: name,
+                date: resultDate.toString(),
+                count: parseInt(count, 10),
+                contact: contact,
+                notes: notes,
+                deleted: false
+            }
+
+            await window.electron.updateReservation(reservationToSave);
+
+        } else {
+            const dateToSave = date.toDate();
+            const timeToSave = time.toDate();
+
+            const resultDate = new Date(dateToSave);
+            resultDate.setHours(timeToSave.getHours());
+            resultDate.setMinutes(timeToSave.getMinutes());
+            resultDate.setSeconds(0);
+
+            const reservationToSave: Reservation = {
+                id: 0,
+                name: name,
+                date: resultDate.toString(),
+                count: parseInt(count, 10),
+                contact: contact,
+                notes: notes,
+                deleted: false
+            }
+
+            await window.electron.saveReservation(reservationToSave);
+        }
+
+        setOpen(false);
+    }
 
     return (
         <Dialog open={open} onClose={() => setOpen(false)} className="relative z-10">
@@ -95,7 +148,7 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                                                 <DatePicker
                                                     label="Datum"
                                                     value={date}
-                                                    onChange={(selectedDate) => setDate(selectedDate)}
+                                                    onChange={(selectedDate) => setDate(selectedDate ? selectedDate : dayjs())}
                                                     disabled={readOnly}
                                                     slotProps={{
                                                         textField: {
@@ -114,7 +167,7 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                                                 <TimePicker
                                                     label="Uhrzeit"
                                                     value={time}
-                                                    onChange={(selectedTime) => setTime(selectedTime)}
+                                                    onChange={(selectedTime) => setTime(selectedTime ? selectedTime : dayjs())}
                                                     disabled={readOnly}
                                                     slotProps={{
                                                         textField: {
@@ -197,7 +250,7 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                                 ) : (
                                     <button
                                         type="button"
-                                        onClick={() => setOpen(false)}
+                                        onClick={() => void handleSave()}
                                         className="cursor-pointer ml-auto mr-4 inline-flex w-36 justify-center rounded-md bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-blue-500"
                                     >
                                         Speichern
