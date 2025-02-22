@@ -11,10 +11,15 @@
     "start": "concurrently \"vite\" \"electron electron/main.js\""
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
+    "@mui/material": "^6.4.5",
+    "@mui/x-date-pickers": "^7.27.0",
     "@tailwindcss/vite": "^4.0.6",
     "concurrently": "^9.1.2",
+    "dayjs": "^1.11.13",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.5",

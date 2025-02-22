@@ -1,20 +1,26 @@
 'use client'
 
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
+import {Dialog, DialogBackdrop, DialogPanel, DialogTitle, Textarea} from '@headlessui/react'
 import {XMarkIcon} from "@heroicons/react/16/solid";
 import {Reservation} from "../types/types";
 import {useEffect, useState} from "react";
+import {DatePicker, LocalizationProvider, TimePicker} from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import 'dayjs/locale/de';
+import {TextField} from "@mui/material";
+import dayjs, { Dayjs } from "dayjs";
+
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function ReservationModal( { open, setOpen, reservation }: { open: boolean, setOpen: (open: boolean) => void, reservation: Reservation | null } ) {
+export default function ReservationModal( { open, setOpen, reservation, inputDate }: { open: boolean, setOpen: (open: boolean) => void, reservation: Reservation | null, inputDate: Date | null } ) {
     const [editMode, setEditMode] = useState<boolean>(false);
     const [readOnly, setReadOnly] = useState<boolean>(false);
 
     const [name, setName] = useState<string>('');
-    const [date, setDate] = useState<string>('');
+    const [date, setDate] = useState<Dayjs | null>(dayjs(new Date()));
     const [time, setTime] = useState<string>('');
     const [count, setCount] = useState<string>('');
     const [contact, setContact] = useState<string>('');
@@ -26,11 +32,13 @@ export default function ReservationModal( { open, setOpen, reservation }: { open
             setReadOnly(true);
 
             setName(reservation.name);
-            setDate(new Date(reservation.date).toLocaleDateString('de-DE', { month: '2-digit', day: '2-digit', year: '2-digit' }));
+            setDate(dayjs(reservation.date));
             setTime(new Date(reservation.date).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', hour12: false }))
             setCount(reservation.count.toString());
             setContact(reservation.contact);
             setNotes(reservation.notes);
+        } else if (inputDate) {
+            setDate(dayjs(inputDate));
         }
     }, [open]);
 
@@ -56,127 +64,60 @@ export default function ReservationModal( { open, setOpen, reservation }: { open
                         <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                             <div className="sm:flex sm:items-start">
                                 <div className="mt-3 mb-3 text-center sm:mt-0 sm:ml-4 sm:mr-4 sm:text-left w-full ">
-                                    <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12 w-full">
-                                        <div className="sm:col-span-4">
-                                            <label htmlFor="name" className="block text-lg/6 font-medium text-gray-900">
-                                                Name
-                                            </label>
-                                            <div className="mt-2">
-                                                <input
-                                                    id="name"
-                                                    name="name"
-                                                    type="text"
-                                                    readOnly={readOnly}
-                                                    value={name}
-                                                    onChange={(e) => setName(e.target.value)}
-                                                    className={classNames(
-                                                        readOnly ? "bg-gray-200" : "bg-white",
-                                                        "block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
-                                                    )}
-                                                />
-                                            </div>
+                                    <div className="grid gap-x-6 gap-y-8 grid-cols-12 w-full">
+                                        <div className="col-span-4">
+                                            <TextField
+                                                label="Name"
+                                                value={name}
+                                                onChange={(e) => setName(e.target.value)}
+                                            />
                                         </div>
-                                        <div className="sm:col-span-4">
-                                            <label htmlFor="date" className="block text-lg/6 font-medium text-gray-900">
-                                                Datum
-                                            </label>
-                                            <div className="mt-2">
-                                                <input
-                                                    id="date"
-                                                    name="date"
-                                                    type="text"
-                                                    readOnly={readOnly}
+                                        <div className="col-span-4">
+                                            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
+                                                <DatePicker
+                                                    label="Datum"
                                                     value={date}
-                                                    onChange={(e) => setDate(e.target.value)}
-                                                    className={classNames(
-                                                        readOnly ? "bg-gray-200" : "bg-white",
-                                                        "block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
-                                                    )}
+                                                    onChange={(selectedDate) => setDate(selectedDate)}
                                                 />
-                                            </div>
+                                            </LocalizationProvider>
                                         </div>
-                                        <div className="sm:col-span-4">
-                                            <label htmlFor="time" className="block text-lg/6 font-medium text-gray-900">
-                                                Uhrzeit
-                                            </label>
-                                            <div className="mt-2">
-                                                <input
-                                                    id="time"
-                                                    name="time"
-                                                    type="text"
-                                                    readOnly={readOnly}
-                                                    value={time}
-                                                    onChange={(e) => setTime(e.target.value)}
-                                                    className={classNames(
-                                                        readOnly ? "bg-gray-200" : "bg-white",
-                                                        "block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
-                                                    )}
+                                        <div className="col-span-4">
+                                            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
+                                                <TimePicker
+                                                    label="Uhrzeit"
                                                 />
-                                            </div>
+                                            </LocalizationProvider>
                                         </div>
                                     </div>
-                                    <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12">
-                                        <div className="sm:col-span-4">
-                                            <label htmlFor="count" className="block text-lg/6 font-medium text-gray-900">
-                                                Anzahl
-                                            </label>
-                                            <div className="mt-2">
-                                                <input
-                                                    id="count"
-                                                    name="count"
-                                                    type="text"
-                                                    readOnly={readOnly}
-                                                    value={count}
-                                                    min={1}
-                                                    onChange={(e) => setCount(e.target.value)}
-                                                    className={classNames(
-                                                        readOnly ? "bg-gray-200" : "bg-white",
-                                                        "block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
-                                                    )}
-                                                />
-                                            </div>
+                                    <div className="mt-4 grid gap-x-6 gap-y-8 grid-cols-12">
+                                        <div className="col-span-4">
+                                            <TextField
+                                                label="Anzahl"
+                                                value={count}
+                                                onChange={(e) => setCount(e.target.value)}
+                                            />
                                         </div>
                                     </div>
-                                    <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12">
-                                        <div className="sm:col-span-full">
-                                            <label htmlFor="contact" className="block text-lg/6 font-medium text-gray-900">
-                                                Kontaktdaten
-                                            </label>
-                                            <div className="mt-2">
-                                                <input
-                                                    id="contact"
-                                                    name="contact"
-                                                    type="text"
-                                                    readOnly={readOnly}
-                                                    value={contact}
-                                                    onChange={(e) => setContact(e.target.value)}
-                                                    className={classNames(
-                                                        readOnly ? "bg-gray-200" : "bg-white",
-                                                        "block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
-                                                    )}
-                                                />
-                                            </div>
+                                    <div className="mt-4 grid gap-x-6 gap-y-8 grid-cols-12">
+                                        <div className="col-span-full">
+                                            <TextField
+                                                label="Kontakt"
+                                                fullWidth
+                                                value={contact}
+                                                onChange={(e) => setContact(e.target.value)}
+                                            />
                                         </div>
                                     </div>
                                     <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12">
                                         <div className="col-span-full">
-                                            <label htmlFor="about" className="block text-lg/6 font-medium text-gray-900">
-                                                Anmerkungen
-                                            </label>
-                                            <div className="mt-2">
-                                                <textarea
-                                                    id="about"
-                                                    name="about"
-                                                    rows={3}
-                                                    readOnly={readOnly}
-                                                    value={notes}
-                                                    onChange={(e) => setNotes(e.target.value)}
-                                                    className={classNames(
-                                                        readOnly ? "bg-gray-200" : "bg-white",
-                                                        "block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
-                                                    )}
-                                                />
-                                            </div>
+                                            <TextField
+                                                label="Anmerkungen"
+                                                fullWidth
+                                                multiline
+                                                rows={3}
+                                                value={notes}
+                                                onChange={(e) => setNotes(e.target.value)}
+                                            />
                                         </div>
                                     </div>
                                 </div>

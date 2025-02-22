@@ -178,7 +178,7 @@ export default function Calendar({ onDateSelect }: { onDateSelect: (date: Date) 
                     </button>
                 </div>
             </div>
-            <ReservationModal open={openModal} setOpen={setOpenModal} reservation={null}/>
+            <ReservationModal open={openModal} setOpen={setOpenModal} reservation={null} inputDate={selectedDate}/>
         </>
     )
 }
