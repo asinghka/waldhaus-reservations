@@ -1,7 +1,6 @@
 # About
 
-This template provides a minimal setup to get React working in Vite with Electron.
-It is intended to be used as a starting point for developing beautiful desktop applications using Tailwind CSS.
+Waldhaus Reservations is a web app designed to manage reservations and provide basic statistics. It is based on my `electron-react-template`.
 
 Technologies used in this project:
 
@@ -10,18 +9,3 @@ Technologies used in this project:
 * Vite
 * Typescript + SWC
 * Tailwind CSS
-
-
-# How to setup
-Clone this repository
-```
-git clone https://github.com/asinghka/electron-react-template.git
-```
-Install all dependencies from the project root folder
-```
-npm install
-```
-and run the electron app
-```
-npm start
-```
