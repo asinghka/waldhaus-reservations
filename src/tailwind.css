@@ -4,3 +4,12 @@
     --font-sans: Inter, sans-serif;
     --font-sans--font-feature-settings: 'cv11';
 }
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
