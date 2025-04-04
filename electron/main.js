@@ -33,8 +33,6 @@ ipcMain.handle('get-reservations', async () => {
 });
 
 ipcMain.handle('save-reservation', (event, reservation) => {
-    console.log(reservation);
-
     const { id, name, date, count, contact, notes, deleted } = reservation;
 
     db.run(
