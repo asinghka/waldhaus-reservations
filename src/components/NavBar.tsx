@@ -18,12 +18,12 @@ export default function NavBar() {
 
     return (
         <Disclosure as="nav" className="border-b border-gray-200 bg-gray-800">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-7xl px-8">
                 <div className="flex h-24 items-center justify-between">
                     <div className="flex shrink-0">
                         <img
                             src="/assets/logo.png"
-                            className="hidden h-14 w-auto lg:block"
+                            className="h-14 w-auto block"
                         />
                     </div>
                     <div className="ml-10 flex items-baseline space-x-4">
