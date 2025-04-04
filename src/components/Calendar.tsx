@@ -27,7 +27,7 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Calendar({ onDateSelect }: { onDateSelect: (date: Date) => void }) {
+export default function Calendar({ onDateSelect, onModalChange }: { onDateSelect: (date: Date) => void, onModalChange: (open: boolean) => void }) {
     const [openModal, setOpenModal] = React.useState(false);
 
     function equalDates(date1: Date, date2: Date) {
@@ -69,10 +69,24 @@ export default function Calendar({ onDateSelect }: { onDateSelect: (date: Date) 
         onDateSelect(selectedDate);
     }, [selectedDate, onDateSelect]);
 
+    useEffect(() => {
+        onModalChange?.(openModal);
+    }, [openModal]);
+
     return (
         <>
-            <div className="flex flex-col">
-                <div className="text-center items-center w-80">
+            <div className="flex flex-col items-center">
+                <button
+                    type="button"
+                    onClick={() => setOpenModal(true)}
+                    className="cursor-pointer mr-auto mt-6 rounded-md bg-blue-600 px-3 py-2 text-center text-lg font-regular text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                >
+                    <div className="flex items-center justify-center">
+                        Neue Reservierung
+                        <PlusCircleIcon className="ml-2 size-6 text-white"/>
+                    </div>
+                </button>
+                <div className="text-center pt-12 items-center w-80">
                     <div className="w-full flex text-gray-900">
                         <button
                             type="button"
@@ -166,16 +180,6 @@ export default function Calendar({ onDateSelect }: { onDateSelect: (date: Date) 
                             </button>
                         ))}
                     </div>
-                    <button
-                        type="button"
-                        onClick={() => setOpenModal(true)}
-                        className="cursor-pointer mt-8 w-full rounded-md bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                    >
-                        <div className="flex items-center justify-center">
-                            Neue Reservierung
-                            <PlusCircleIcon className="ml-2 size-6 text-white"/>
-                        </div>
-                    </button>
                 </div>
             </div>
             <ReservationModal open={openModal} setOpen={setOpenModal} reservation={null} inputDate={selectedDate}/>

@@ -58,7 +58,7 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
 
     useEffect(() => {
         fetchReservations().catch(error => console.error('Error fetching reservations:', error));
-    }, [filterDate]);
+    }, [openModal, filterDate]);
 
     const afternoonReservations = reservations.filter(
         (reservation) => {

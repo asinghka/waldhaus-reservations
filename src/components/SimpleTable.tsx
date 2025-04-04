@@ -4,7 +4,7 @@ import ReservationModal from "./ReservationModal.tsx";
 import {useEffect, useState} from "react";
 import {Reservation} from "../types/types";
 
-export function SimpleTable({ filterDate } : { filterDate: Date }) {
+export function SimpleTable({ filterDate, modalOpen } : { filterDate: Date, modalOpen: boolean }) {
     const [reservations, setReservations] = useState<Reservation[]>([]);
 
     const [selectedReservation, setSelectedReservation] = useState<Reservation | null>(null);
@@ -49,7 +49,7 @@ export function SimpleTable({ filterDate } : { filterDate: Date }) {
 
     useEffect(() => {
         fetchReservations().catch(error => console.error('Error fetching reservations:', error));
-    }, [filterDate]);
+    }, [modalOpen, filterDate]);
 
     return (
         <>
