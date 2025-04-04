@@ -64,8 +64,8 @@ ipcMain.handle('update-reservation', (event, reservation) => {
 
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
-        width: 1920,
-        height: 1080,
+        width: 1024,
+        height: 768,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
         }
