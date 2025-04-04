@@ -42,6 +42,9 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
             setDeleted(reservation.deleted);
 
         } else if (inputDate) {
+            setEditMode(false);
+            setReadOnly(false);
+
             setName('');
             setDate(dayjs(inputDate));
             setTime(dayjs(inputDate).hour(18).minute(0).second(0));
@@ -51,6 +54,9 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
             setDeleted(false);
 
         } else {
+            setEditMode(false);
+            setReadOnly(false);
+
             setName('');
             setDate(dayjs());
             setTime(dayjs().hour(18).minute(0).second(0));

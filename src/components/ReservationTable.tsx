@@ -46,6 +46,11 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
         }
     }
 
+    const handleNewReservation = () => {
+        setSelectedReservation(null);
+        setOpenModal(true);
+    }
+
     const handleEditReservation = (reservation: Reservation) => {
         setSelectedReservation(reservation);
         setOpenModal(true);
@@ -76,7 +81,7 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                         <div className="sm:flex sm:items-center mr-auto">
                             <button
                                 type="button"
-                                onClick={() => setOpenModal(true)}
+                                onClick={() => handleNewReservation()}
                                 className="cursor-pointer mr-auto block rounded-md bg-blue-600 px-3 py-2 text-center text-lg font-regular text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                             >
                                 <div className="flex items-center justify-center">
@@ -118,7 +123,7 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                             <div>
                                 <button
                                     type="button"
-                                    onClick={() => setOpenModal(true)}
+                                    onClick={() => handleNewReservation()}
                                     className="cursor-pointer ml-auto block rounded-md bg-blue-600 px-3 py-2 text-center text-lg font-regular text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                                 >
                                     <div className="flex items-center justify-center">
