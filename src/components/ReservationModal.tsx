@@ -114,6 +114,33 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
         setOpen(false);
     }
 
+    const handleDelete = async () => {
+        if (id) {
+            const dateToSave = date.toDate();
+            const timeToSave = time.toDate();
+
+            const resultDate = new Date(dateToSave);
+            resultDate.setHours(timeToSave.getHours());
+            resultDate.setMinutes(timeToSave.getMinutes());
+            resultDate.setSeconds(0);
+
+            const reservationToSave: Reservation = {
+                id: id,
+                name: name,
+                date: resultDate.toString(),
+                count: parseInt(count, 10),
+                contact: contact,
+                notes: notes,
+                deleted: true
+            }
+
+            await window.electron.updateReservation(reservationToSave);
+
+        }
+
+        setOpen(false);
+    }
+
     return (
         <Dialog open={open} onClose={() => setOpen(false)} className="relative z-10">
             <DialogBackdrop
@@ -253,6 +280,23 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                                     >
                                         Bearbeiten
                                     </button>
+                                ) : editMode ? (
+                                    <div className="ml-auto">
+                                        <button
+                                            type="button"
+                                            onClick={() => handleDelete()}
+                                            className="cursor-pointer mr-8 inline-flex w-36 justify-center rounded-md bg-red-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-red-400"
+                                        >
+                                            Löschen
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => void handleSave()}
+                                            className="cursor-pointer mr-4 inline-flex w-36 justify-center rounded-md bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-blue-500"
+                                        >
+                                            Speichern
+                                        </button>
+                                    </div>
                                 ) : (
                                     <button
                                         type="button"
