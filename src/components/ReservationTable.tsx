@@ -27,6 +27,10 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                     && reservationDate.getMonth() === filterDate.getMonth()
                     && reservationDate.getDate() === filterDate.getDate()
                     && !reservation.deleted;
+            }).sort((a, b) => {
+                const timeA = new Date(a.date).getTime();
+                const timeB = new Date(b.date).getTime();
+                return timeA - timeB;
             });
 
             setReservations(filteredReservations);
