@@ -5,7 +5,7 @@ import {
 } from '@heroicons/react/20/solid'
 import ReservationModal from "./ReservationModal.tsx";
 import * as React from "react";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {PlusCircleIcon} from "@heroicons/react/16/solid";
 
 const months = [
@@ -30,6 +30,41 @@ function classNames(...classes: string[]) {
 export default function Calendar({ onDateSelect, onModalChange }: { onDateSelect: (date: Date) => void, onModalChange: (open: boolean) => void }) {
     const [openModal, setOpenModal] = React.useState(false);
 
+    const [selectedYear, setSelectedYear] = React.useState(new Date().getFullYear());
+    const [selectedMonth, setSelectedMonth] = React.useState(new Date().getMonth());
+    const [selectedDate, setSelectedDate] = React.useState(new Date());
+
+    const [today] = React.useState(new Date());
+    const [numDays, setNumDays] = React.useState<number>(0);
+    const [days, setDays] = React.useState(() => generateDays(selectedYear, selectedMonth));
+
+    const [peoplePerDay, setPeoplePerDay] = useState<number[]>();
+
+    const fetchReservations = async () => {
+        try {
+            const data = await window.electron.getReservations();
+
+            const filteredReservations = data.filter((reservation) => {
+                const reservationDate = new Date(reservation.date);
+                return reservationDate.getFullYear() === selectedYear
+                    && reservationDate.getMonth() === selectedMonth
+                    && !reservation.deleted;
+            });
+
+            const dailyCount = new Array<number>(numDays).fill(0);
+            for (const reservation of filteredReservations) {
+                const date = new Date(reservation.date);
+                const day = date.getDate();
+                dailyCount[day - 1] += reservation.count;
+            }
+
+            setPeoplePerDay(dailyCount);
+
+        } catch (error) {
+            console.error("Error fetching reservations:", error);
+        }
+    }
+
     function equalDates(date1: Date, date2: Date) {
         const date1_time_reset = new Date(date1.setHours(0, 0, 0, 0));
         const date2_time_reset = new Date(date2.setHours(0, 0, 0, 0));
@@ -42,6 +77,9 @@ export default function Calendar({ onDateSelect, onModalChange }: { onDateSelect
     }
 
     function generateDays(year: number, month: number) {
+        const numDays = new Date(year, month + 1, 0).getDate();
+        setNumDays(numDays);
+
         const days = [];
 
         const startDay = new Date(year, month, 1);
@@ -58,12 +96,9 @@ export default function Calendar({ onDateSelect, onModalChange }: { onDateSelect
         return days;
     }
 
-    const [selectedYear, setSelectedYear] = React.useState(new Date().getFullYear());
-    const [selectedMonth, setSelectedMonth] = React.useState(new Date().getMonth());
-    const [selectedDate, setSelectedDate] = React.useState(new Date());
-    const [today] = React.useState(new Date());
-
-    const [days, setDays] = React.useState(() => generateDays(selectedYear, selectedMonth));
+    useEffect(() => {
+        fetchReservations().catch(error => console.error('Error fetching reservations:', error));
+    }, [openModal, selectedMonth]);
 
     useEffect(() => {
         onDateSelect(selectedDate);
@@ -175,7 +210,21 @@ export default function Calendar({ onDateSelect, onModalChange }: { onDateSelect
                                         equalDates(day, selectedDate) ? 'bg-blue-600' : '',
                                     )}
                                 >
-                                    {day.getDate()}
+                                    <div className="relative flex items-center justify-center h-full">
+                                        <span>{day.getDate()}</span>
+                                        <span
+                                            className={classNames(
+                                                "absolute bottom-0 h-1.5 w-1.5 rounded-full",
+                                                !peoplePerDay ? "bg-transparent"
+                                                : equalDates(day, selectedDate) ? "bg-transparent"
+                                                : equalDates(day, today) ? "bg-transparent"
+                                                : !equalMonth(day, selectedMonth) ? "bg-transparent"
+                                                : peoplePerDay[day.getDate() - 1] > 25 ? "bg-red-500"
+                                                : peoplePerDay[day.getDate() - 1] > 15 ? "bg-yellow-400"
+                                                : "bg-transparent"
+                                            )}
+                                        />
+                                    </div>
                                 </time>
                             </button>
                         ))}
