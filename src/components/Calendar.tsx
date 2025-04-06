@@ -221,7 +221,7 @@ export default function Calendar({ onDateSelect, onModalChange }: { onDateSelect
                                                 : !equalMonth(day, selectedMonth) ? "bg-transparent"
                                                 : peoplePerDay[day.getDate() - 1] > 25 ? "bg-red-500"
                                                 : peoplePerDay[day.getDate() - 1] > 15 ? "bg-yellow-400"
-                                                : peoplePerDay[day.getDate() - 1] > 1 ? "bg-green-500"
+                                                : peoplePerDay[day.getDate() - 1] > 0 ? "bg-green-500"
                                                 : "bg-transparent"
                                             )}
                                         />
