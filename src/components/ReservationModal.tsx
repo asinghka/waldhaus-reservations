@@ -14,7 +14,7 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function ReservationModal( { open, setOpen, reservation, inputDate }: { open: boolean, setOpen: (open: boolean) => void, reservation: Reservation | null, inputDate: Date | null } ) {
+export default function ReservationModal( { open, setOpen, reservation, inputDate, adminMode = false }: { open: boolean, setOpen: (open: boolean) => void, reservation: Reservation | null, inputDate: Date | null, adminMode?: boolean } ) {
     const [editMode, setEditMode] = useState<boolean>(false);
     const [readOnly, setReadOnly] = useState<boolean>(false);
 
@@ -114,7 +114,7 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
         setOpen(false);
     }
 
-    const handleDelete = async () => {
+    const handleDeleteRestore = async (restore: boolean): Promise<void> => {
         if (id) {
             const dateToSave = date.toDate();
             const timeToSave = time.toDate();
@@ -131,8 +131,10 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                 count: parseInt(count, 10),
                 contact: contact,
                 notes: notes,
-                deleted: true
+                deleted: !restore
             }
+
+            console.log("reservationToSave", reservationToSave);
 
             await window.electron.updateReservation(reservationToSave);
 
@@ -280,11 +282,11 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                                     >
                                         Bearbeiten
                                     </button>
-                                ) : editMode ? (
+                                ) : editMode && !adminMode ? (
                                     <div className="ml-auto">
                                         <button
                                             type="button"
-                                            onClick={() => handleDelete()}
+                                            onClick={function () { void handleDeleteRestore(false); }}
                                             className="cursor-pointer mr-8 inline-flex w-36 justify-center rounded-md bg-red-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-red-400"
                                         >
                                             Löschen
@@ -297,7 +299,24 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                                             Speichern
                                         </button>
                                     </div>
-                                ) : (
+                                ) : editMode && adminMode ? (
+                                    <div className="ml-auto">
+                                        <button
+                                            type="button"
+                                            onClick={function () { void handleDeleteRestore(true); }}
+                                            className="cursor-pointer mr-8 inline-flex w-44 justify-center rounded-md bg-green-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-green-400"
+                                        >
+                                            Wiederherstellen
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => void handleSave()}
+                                            className="cursor-pointer mr-4 inline-flex w-36 justify-center rounded-md bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-blue-500"
+                                        >
+                                            Speichern
+                                        </button>
+                                    </div>
+                                    ) : (
                                     <button
                                         type="button"
                                         onClick={() => void handleSave()}
