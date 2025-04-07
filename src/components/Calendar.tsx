@@ -214,7 +214,7 @@ export default function Calendar({ onDateSelect, onModalChange }: { onDateSelect
                                         <span>{day.getDate()}</span>
                                         <span
                                             className={classNames(
-                                                "absolute bottom-0 h-1.5 w-1.5 rounded-full",
+                                                "absolute -bottom-0.5 h-1.5 w-1.5 rounded-full",
                                                 !peoplePerDay ? "bg-transparent"
                                                 : equalDates(day, selectedDate) ? "bg-transparent"
                                                 : equalDates(day, today) ? "bg-transparent"
