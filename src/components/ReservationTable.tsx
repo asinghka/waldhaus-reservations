@@ -82,7 +82,7 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
         <>
             {
                 reservations.length > 0 ? (
-                        <div className="sm:flex sm:items-center mr-auto">
+                        <div className="flex items-center mr-auto">
                             <button
                                 type="button"
                                 onClick={() => handleNewReservation()}
