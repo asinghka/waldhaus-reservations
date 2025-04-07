@@ -38,8 +38,8 @@ function BarChart({filterDate = new Date(), yearView = false, countView = false,
         }
     })
 
-    const generateChartDataByMonth = (filteredReservations) => {
-        let values = new Array(31).fill(0);
+    const generateChartDataByMonth = (filteredReservations: Reservation[]) => {
+        const values = new Array(31).fill(0);
 
         if (!countView) {
             for (const reservation of filteredReservations) {
@@ -69,8 +69,8 @@ function BarChart({filterDate = new Date(), yearView = false, countView = false,
         return chartData;
     }
 
-    const generateChartDataByYear = (filteredReservations) => {
-        let values = new Array(12).fill(0);
+    const generateChartDataByYear = (filteredReservations: Reservation[]) => {
+        const values = new Array(12).fill(0);
 
         if (!countView) {
             for (const reservation of filteredReservations) {
@@ -143,8 +143,8 @@ function BarChart({filterDate = new Date(), yearView = false, countView = false,
     return (
         <>
             <Bar data={chartData} options={options} height={100} />
-    </>
-)
+        </>
+    )
 }
 
 export default BarChart;
