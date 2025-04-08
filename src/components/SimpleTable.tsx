@@ -57,7 +57,7 @@ export function SimpleTable({ filterDate, modalOpen } : { filterDate: Date, moda
 
     return (
         <>
-            <div className="flex flow-row pb-6 px-1 ml-auto">
+            <div className="flex flow-row pb-6 ml-auto">
                 <div className="mr-4">
                     <button
                         type="button"
@@ -82,10 +82,10 @@ export function SimpleTable({ filterDate, modalOpen } : { filterDate: Date, moda
                 </button>
             </div>
             <div className="flex flex-col pl-6">
-                <div className="overflow-x-auto">
-                    <div className="inline-block min-w-full px-1 py-2 align-middle">
+                <div className="auto">
+                    <div className="inline-block min-w-full py-2 align-middle">
                         <div className="overflow-hidden ring-1 shadow-sm ring-black/5 rounded-lg">
-                            <table className="min-w-full divide-y divide-gray-300">
+                            <table className="w-full divide-y divide-gray-300">
                                 <thead className="bg-gray-100">
                                 <tr>
                                     <th scope="col" className="py-3.5 pr-3 pl-4 text-xl font-semibold text-gray-900 sm:pl-6 w-3/10">
