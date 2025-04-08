@@ -26,9 +26,9 @@ function BarChart( { reservations, filterDate = new Date(), yearView = false, co
             labels: Array.from({length: 31}, (_, i) => (i + 1).toString() + "." + (filterDate.getMonth() + 1).toString()),
             datasets: [
                 {
-                    label: "Reservierungen",
+                    label: countView && "Personen" || !countView && "Reservierungen",
                     data: values,
-                    backgroundColor: "rgba(13, 110, 253, 1)",
+                    backgroundColor: countView && "rgb(195,0,239)" || !countView && "rgb(45,126,246)",
                     borderColor: "rgba(0, 0, 0, 1)",
                     borderWidth: 2
                 }

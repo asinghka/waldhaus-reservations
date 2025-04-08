@@ -4,6 +4,7 @@ import {BookOpenIcon, UsersIcon} from "@heroicons/react/16/solid";
 import {useEffect, useState} from "react";
 import {Reservation} from "../types/types";
 import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
+import { Button } from "@mui/material";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, {Dayjs} from "dayjs";
 
@@ -13,6 +14,9 @@ export default function Stats() {
 
     const [monthCount, setMonthCount] = useState<number>(0);
     const [monthReservation, setMonthReservation] = useState<number>(0);
+
+    const [countView, setCountView] = useState<boolean>(false);
+    const [yearView, setYearView] = useState<boolean>(false);
 
     const fetchReservations = async () => {
         try {
@@ -54,8 +58,8 @@ export default function Stats() {
         <>
             <Header title="Statistik zu Reservierungen"/>
             <main className="py-6">
-                <div className="flex px-8 mx-auto max-w-7xl">
-                    <div className="mt-0">
+                <div className="flex px-8 mx-auto max-w-7xl justify-center items-center">
+                    <div className="mt-0 mr-4">
                         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
                             <DatePicker
                                 label="Monat"
@@ -73,6 +77,23 @@ export default function Stats() {
                                 }}
                             />
                         </LocalizationProvider>
+                    </div>
+                    <div className="mt-0 mr-4">
+                        <Button
+                            variant="contained"
+                            color={countView ? "secondary" : "primary"}
+                            onClick={() => setCountView(!countView)}
+                        >
+                            {countView ? "Personen" : "Reservierungen"}
+                        </Button>
+                    </div>
+                    <div className="mt-0">
+                        <Button
+                            variant="contained"
+                            onClick={() => setYearView(!yearView)}
+                        >
+                            {yearView ? "Jahresansicht" : "Monatsansicht"}
+                        </Button>
                     </div>
                     <div className="ml-auto mt-0 mr-4">
                         <button
@@ -99,8 +120,8 @@ export default function Stats() {
                         </button>
                     </div>
                 </div>
-                <div className="px-4 mx-auto max-w-7xl">
-                    <BarChart reservations={reservations} />
+                <div className="pt-12 px-4 mx-auto max-w-7xl">
+                    <BarChart reservations={reservations} countView={countView} yearView={yearView} />
                 </div>
             </main>
         </>
