@@ -61,7 +61,7 @@ function BarChart( { reservations, filterDate = new Date(), yearView = false, co
                 {
                     label: countView && "Personen" || !countView && "Reservierungen",
                     data: values,
-                    backgroundColor: countView && "rgb(51,239,0)" || !countView && "rgba(13, 110, 253, 1)",
+                    backgroundColor: countView && "rgb(195,0,239)" || !countView && "rgb(45,126,246)",
                     borderColor: "rgba(0, 0, 0, 1)",
                     borderWidth: 2
                 }
