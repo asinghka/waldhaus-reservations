@@ -19,7 +19,7 @@ export default function Reservations() {
         <>
             <Header title="Reservierungen im Überblick"/>
             <div className="flex flex-1">
-                <div className="flex flex-row flex-1 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-row flex-1 mx-auto max-w-7xl px-8">
                     <div className="flex h-fit sticky top-10 self-start">
                         <Calendar onDateSelect={handleDateChange} onModalChange={handleModalOpen} />
                     </div>

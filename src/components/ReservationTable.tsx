@@ -100,7 +100,7 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                     className="block rounded-md bg-gray-50 px-3 py-2 text-center text-lg font-regular shadow-xs outline-1 outline-gray-900"
                                 >
                                     <div className="flex items-center justify-center">
-                                        <BookOpenIcon className="mr-2 size-6"/>
+                                        <BookOpenIcon className="mr-1 size-7"/>
                                         {dayReservation}
                                     </div>
                                 </button>
@@ -112,7 +112,7 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                     className="block rounded-md bg-gray-50 px-3 py-2 text-center text-lg font-regular shadow-xs outline-1 outline-gray-900"
                                 >
                                     <div className="flex items-center justify-center">
-                                        <UsersIcon className="mr-2 size-6"/>
+                                        <UsersIcon className="mr-1 size-7"/>
                                         {dayCount}
                                     </div>
                                 </button>

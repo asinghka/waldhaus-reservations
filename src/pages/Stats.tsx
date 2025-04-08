@@ -58,7 +58,7 @@ export default function Stats() {
         <>
             <Header title="Statistik zu Reservierungen"/>
             <main className="py-6">
-                <div className="flex px-8 mx-auto max-w-7xl justify-center items-center">
+                <div className="flex px-8 mx-auto max-w-7xl">
                     <div className="mt-0 mr-4">
                         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
                             <DatePicker
@@ -78,46 +78,41 @@ export default function Stats() {
                             />
                         </LocalizationProvider>
                     </div>
-                    <div className="mt-0 mr-4">
-                        <Button
-                            variant="contained"
-                            color={countView ? "secondary" : "primary"}
-                            onClick={() => setCountView(!countView)}
-                        >
-                            {countView ? "Personen" : "Reservierungen"}
-                        </Button>
-                    </div>
                     <div className="mt-0">
                         <Button
                             variant="contained"
+                            color={yearView ? "info" : "primary"}
                             onClick={() => setYearView(!yearView)}
+                            sx={{ width: 150, height: 50, borderRadius: '8px' }}
                         >
-                            {yearView ? "Jahresansicht" : "Monatsansicht"}
+                            {yearView ? "Monatsansicht" : "Jahresansicht"}
                         </Button>
                     </div>
                     <div className="ml-auto mt-0 mr-4">
-                        <button
-                            type="button"
-                            disabled={true}
-                            className="block rounded-md bg-gray-50 px-3 py-2 text-center text-lg font-regular shadow-xs outline-1 outline-gray-900"
+                        <Button
+                            variant={!countView ? "contained" : "outlined"}
+                            color={!countView ? "primary" : ""}
+                            onClick={() => setCountView(false)}
+                            sx={{ width: 70, height: 50, borderRadius: '8px' }}
                         >
                             <div className="flex items-center justify-center">
-                                <BookOpenIcon className="mr-2 size-6"/>
+                                <BookOpenIcon className="mr-1 size-7"/>
                                 {monthReservation}
                             </div>
-                        </button>
+                        </Button>
                     </div>
                     <div className="mt-0">
-                        <button
-                            type="button"
-                            disabled={true}
-                            className="block rounded-md bg-gray-50 px-3 py-2 text-center text-lg font-regular shadow-xs outline-1 outline-gray-900"
+                        <Button
+                            variant={countView ? "contained" : "outlined"}
+                            color={countView ? "secondary" : ""}
+                            onClick={() => setCountView(true)}
+                            sx={{ width: 70, height: 50, borderRadius: '8px' }}
                         >
                             <div className="flex items-center justify-center">
-                                <UsersIcon className="mr-2 size-6"/>
+                                <UsersIcon className="mr-1 size-7"/>
                                 {monthCount}
                             </div>
-                        </button>
+                        </Button>
                     </div>
                 </div>
                 <div className="pt-12 px-4 mx-auto max-w-7xl">
