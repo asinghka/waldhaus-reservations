@@ -53,7 +53,7 @@ export function SimpleTable({ filterDate, modalOpen } : { filterDate: Date, moda
 
     useEffect(() => {
         fetchReservations().catch(error => console.error('Error fetching reservations:', error));
-    }, [modalOpen, filterDate]);
+    }, [openModal, modalOpen, filterDate]);
 
     return (
         <>
