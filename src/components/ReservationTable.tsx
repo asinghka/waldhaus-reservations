@@ -3,6 +3,8 @@ import Divider from "./Divider.tsx";
 import {useEffect, useState} from "react";
 import ReservationModal from "./ReservationModal.tsx";
 import {Reservation} from "../types/types";
+import {Button} from "@mui/material";
+import * as React from "react";
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -93,29 +95,29 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                     <PlusCircleIcon className="ml-2 size-6 text-white"/>
                                 </div>
                             </button>
-                            <div className="mt-4 sm:mt-0 mr-4">
-                                <button
-                                    type="button"
-                                    disabled={true}
-                                    className="block rounded-md bg-gray-50 px-3 py-2 text-center text-lg font-regular shadow-xs outline-1 outline-gray-900"
+                            <div className="ml-auto mt-0 mr-4">
+                                <Button
+                                    variant="outlined"
+                                    color=""
+                                    sx={{ width: 70, height: 50, borderRadius: '8px' }}
                                 >
                                     <div className="flex items-center justify-center">
                                         <BookOpenIcon className="mr-1 size-7"/>
                                         {dayReservation}
                                     </div>
-                                </button>
+                                </Button>
                             </div>
-                            <div className="mt-4 sm:mt-0">
-                                <button
-                                    type="button"
-                                    disabled={true}
-                                    className="block rounded-md bg-gray-50 px-3 py-2 text-center text-lg font-regular shadow-xs outline-1 outline-gray-900"
+                            <div>
+                                <Button
+                                    variant="outlined"
+                                    color=""
+                                    sx={{ width: 70, height: 50, borderRadius: '8px' }}
                                 >
                                     <div className="flex items-center justify-center">
                                         <UsersIcon className="mr-1 size-7"/>
                                         {dayCount}
                                     </div>
-                                </button>
+                                </Button>
                             </div>
                         </div>
                     ) : (

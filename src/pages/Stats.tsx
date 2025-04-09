@@ -101,7 +101,7 @@ export default function Stats() {
                             </div>
                         </Button>
                     </div>
-                    <div className="mt-0">
+                    <div>
                         <Button
                             variant={countView ? "contained" : "outlined"}
                             color={countView ? "secondary" : ""}

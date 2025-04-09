@@ -3,6 +3,7 @@ import * as React from "react";
 import ReservationModal from "./ReservationModal.tsx";
 import {useEffect, useState} from "react";
 import {Reservation} from "../types/types";
+import {Button} from "@mui/material";
 
 export function SimpleTable({ filterDate, modalOpen } : { filterDate: Date, modalOpen: boolean }) {
     const [reservations, setReservations] = useState<Reservation[]>([]);
@@ -58,28 +59,30 @@ export function SimpleTable({ filterDate, modalOpen } : { filterDate: Date, moda
     return (
         <>
             <div className="flex flow-row pb-6 ml-auto">
-                <div className="mr-4">
-                    <button
-                        type="button"
-                        disabled={true}
-                        className="block rounded-md bg-gray-50 px-3 py-2 text-center text-lg font-regular shadow-xs outline-1 outline-gray-900"
+                <div className="ml-auto mt-0 mr-4">
+                    <Button
+                        variant="outlined"
+                        color=""
+                        sx={{ width: 70, height: 50, borderRadius: '8px' }}
                     >
                         <div className="flex items-center justify-center">
                             <BookOpenIcon className="mr-1 size-7"/>
                             {dayReservation}
                         </div>
-                    </button>
+                    </Button>
                 </div>
-                <button
-                    type="button"
-                    disabled={true}
-                    className="block rounded-md bg-gray-50 px-3 py-2 text-center text-lg font-regular shadow-xs outline-1 outline-gray-900"
-                >
-                    <div className="flex items-center justify-center">
-                        <UsersIcon className="mr-1 size-7"/>
-                        {dayCount}
-                    </div>
-                </button>
+                <div>
+                    <Button
+                        variant="outlined"
+                        color=""
+                        sx={{ width: 70, height: 50, borderRadius: '8px' }}
+                    >
+                        <div className="flex items-center justify-center">
+                            <UsersIcon className="mr-1 size-7"/>
+                            {dayCount}
+                        </div>
+                    </Button>
+                </div>
             </div>
             <div className="flex flex-col pl-6">
                 <div className="auto">
