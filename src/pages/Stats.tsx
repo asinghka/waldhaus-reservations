@@ -63,7 +63,7 @@ export default function Stats() {
                         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
                             <DatePicker
                                 label="Monat"
-                                views={['year', 'month']}
+                                views={['month']}
                                 value={filterDate}
                                 onChange={(selectedDate) => setFilterDate(selectedDate ? selectedDate : dayjs())}
                                 slotProps={{
