@@ -83,7 +83,7 @@ export default function Stats() {
                             variant="contained"
                             color={yearView ? "info" : "primary"}
                             onClick={() => setYearView(!yearView)}
-                            sx={{ width: 150, height: 50, borderRadius: '8px' }}
+                            sx={{ width: 150, height: 50, borderRadius: '8px', backgroundColor: yearView ? 'rgb(21, 93, 252)' : 'rgb(51,118,253)' }}
                         >
                             {yearView ? "Monatsansicht" : "Jahresansicht"}
                         </Button>
@@ -93,7 +93,14 @@ export default function Stats() {
                             variant={!countView ? "contained" : "outlined"}
                             color={!countView ? "primary" : ""}
                             onClick={() => setCountView(false)}
-                            sx={{ width: 70, height: 50, borderRadius: '8px' }}
+                            sx={{
+                                width: 70,
+                                height: 50,
+                                borderRadius: '8px',
+                                backgroundColor: !countView ? 'rgb(21, 93, 252)' : 'transparent',
+                                color: !countView ? 'white' : 'black',
+                                border: !countView ? 'none' : '1px solid black',
+                            }}
                         >
                             <div className="flex items-center justify-center">
                                 <BookOpenIcon className="mr-1 size-7"/>
