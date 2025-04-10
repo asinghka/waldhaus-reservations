@@ -69,6 +69,7 @@ function BarChart( { reservations, filterDate = new Date(), yearView = false, co
     }
 
     const chartData = yearView ? generateChartDataByYear(reservations) : generateChartDataByMonth(reservations);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const maxDataValue = Math.max(...chartData.datasets[0].data);
 
     const options = {
