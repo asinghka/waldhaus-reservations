@@ -1,5 +1,5 @@
 import {Bar} from "react-chartjs-2"
-import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip} from "chart.js";
+import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip, ChartOptions} from "chart.js";
 import {Reservation} from "../types/types";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -25,9 +25,9 @@ function BarChart( { reservations, filterDate = new Date(), yearView = false, co
             labels: Array.from({length: 31}, (_, i) => (i + 1).toString() + "." + (filterDate.getMonth() + 1).toString()),
             datasets: [
                 {
-                    label: countView && "Personen" || !countView && "Reservierungen",
+                    label: countView ? "Personen" : "Reservierungen",
                     data: values,
-                    backgroundColor: countView && "rgb(195,0,239)" || !countView && "rgb(45,126,246)",
+                    backgroundColor: countView ? "rgb(195,0,239)" : "rgb(45,126,246)",
                     borderColor: "rgba(0, 0, 0, 1)",
                     borderWidth: 2
                 }
@@ -58,9 +58,9 @@ function BarChart( { reservations, filterDate = new Date(), yearView = false, co
 
             datasets: [
                 {
-                    label: countView && "Personen" || !countView && "Reservierungen",
+                    label: countView ? "Personen" : "Reservierungen",
                     data: values,
-                    backgroundColor: countView && "rgb(195,0,239)" || !countView && "rgb(45,126,246)",
+                    backgroundColor: countView ? "rgb(195,0,239)" : "rgb(45,126,246)",
                     borderColor: "rgba(0, 0, 0, 1)",
                     borderWidth: 2
                 }
@@ -72,14 +72,13 @@ function BarChart( { reservations, filterDate = new Date(), yearView = false, co
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const maxDataValue = Math.max(...chartData.datasets[0].data);
 
-    const options = {
+    const options: ChartOptions<'bar'> = {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
             legend: {
                 display: true,
                 position: 'top',
-                onClick: null
             },
         },
         scales: {
