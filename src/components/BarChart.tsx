@@ -76,6 +76,7 @@ function BarChart( { reservations, filterDate = new Date(), yearView = false, co
 
     const options = {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 display: true,
@@ -102,9 +103,9 @@ function BarChart( { reservations, filterDate = new Date(), yearView = false, co
     };
 
     return (
-        <>
-            <Bar data={chartData} options={options} height={100} />
-        </>
+        <div style={{ width: "100%", height: "100%", minHeight: "350px" }}>
+            <Bar data={chartData} options={options} />
+        </div>
     )
 }
 
