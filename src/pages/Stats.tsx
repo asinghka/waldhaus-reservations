@@ -81,7 +81,6 @@ export default function Stats() {
                     <div className="mt-0">
                         <Button
                             variant="contained"
-                            color={yearView ? "info" : "primary"}
                             onClick={() => setYearView(!yearView)}
                             sx={{ width: 150, height: 50, borderRadius: '8px', backgroundColor: yearView ? 'rgb(21, 93, 252)' : 'rgb(51,118,253)' }}
                         >
@@ -91,7 +90,6 @@ export default function Stats() {
                     <div className="ml-auto mt-0 mr-4">
                         <Button
                             variant={!countView ? "contained" : "outlined"}
-                            color={!countView ? "primary" : ""}
                             onClick={() => setCountView(false)}
                             sx={{
                                 width: 70,
@@ -111,9 +109,15 @@ export default function Stats() {
                     <div>
                         <Button
                             variant={countView ? "contained" : "outlined"}
-                            color={countView ? "secondary" : ""}
                             onClick={() => setCountView(true)}
-                            sx={{ width: 70, height: 50, borderRadius: '8px' }}
+                            sx={{
+                                width: 70,
+                                height: 50,
+                                borderRadius: '8px',
+                                color: countView ? 'white' : 'black',
+                                backgroundColor: countView ? 'secondary.main' : 'transparent',
+                                borderColor: countView ? 'secondary.main' : 'black',
+                            }}
                         >
                             <div className="flex items-center justify-center">
                                 <UsersIcon className="mr-1 size-7"/>

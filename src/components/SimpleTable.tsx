@@ -62,8 +62,7 @@ export function SimpleTable({ filterDate, modalOpen } : { filterDate: Date, moda
                 <div className="ml-auto mt-0 mr-4">
                     <Button
                         variant="outlined"
-                        color=""
-                        sx={{ width: 70, height: 50, borderRadius: '8px' }}
+                        sx={{ width: 70, height: 50, borderRadius: '8px', color: 'black', borderColor: 'black' }}
                     >
                         <div className="flex items-center justify-center">
                             <BookOpenIcon className="mr-1 size-7"/>
@@ -74,8 +73,7 @@ export function SimpleTable({ filterDate, modalOpen } : { filterDate: Date, moda
                 <div>
                     <Button
                         variant="outlined"
-                        color=""
-                        sx={{ width: 70, height: 50, borderRadius: '8px' }}
+                        sx={{ width: 70, height: 50, borderRadius: '8px', color: 'black', borderColor: 'black' }}
                     >
                         <div className="flex items-center justify-center">
                             <UsersIcon className="mr-1 size-7"/>

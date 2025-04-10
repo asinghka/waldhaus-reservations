@@ -4,7 +4,6 @@ import {useEffect, useState} from "react";
 import ReservationModal from "./ReservationModal.tsx";
 import {Reservation} from "../types/types";
 import {Button} from "@mui/material";
-import * as React from "react";
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -98,8 +97,7 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                             <div className="ml-auto mt-0 mr-4">
                                 <Button
                                     variant="outlined"
-                                    color=""
-                                    sx={{ width: 70, height: 50, borderRadius: '8px' }}
+                                    sx={{ width: 70, height: 50, borderRadius: '8px', color: 'black', borderColor: 'black' }}
                                 >
                                     <div className="flex items-center justify-center">
                                         <BookOpenIcon className="mr-1 size-7"/>
@@ -110,8 +108,7 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                             <div>
                                 <Button
                                     variant="outlined"
-                                    color=""
-                                    sx={{ width: 70, height: 50, borderRadius: '8px' }}
+                                    sx={{ width: 70, height: 50, borderRadius: '8px', color: 'black', borderColor: 'black' }}
                                 >
                                     <div className="flex items-center justify-center">
                                         <UsersIcon className="mr-1 size-7"/>
