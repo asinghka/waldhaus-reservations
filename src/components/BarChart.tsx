@@ -1,5 +1,4 @@
 import {Bar} from "react-chartjs-2"
-import {useNavigate} from "react-router-dom";
 import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip} from "chart.js";
 import {Reservation} from "../types/types";
 
@@ -72,8 +71,6 @@ function BarChart( { reservations, filterDate = new Date(), yearView = false, co
     const chartData = yearView ? generateChartDataByYear(reservations) : generateChartDataByMonth(reservations);
     const maxDataValue = Math.max(...chartData.datasets[0].data);
 
-    const navigate = useNavigate();
-
     const options = {
         responsive: true,
         maintainAspectRatio: false,
@@ -94,12 +91,6 @@ function BarChart( { reservations, filterDate = new Date(), yearView = false, co
                 }
             },
         },
-        onClick: (event, elements) => {
-            if (elements.length >= 0 && !yearView) {
-                const index = elements[0].index;
-                navigate(`/all?year=${filterDate.getFullYear()}&month=${filterDate.getMonth() + 1}&day=${index + 1}`);
-            }
-        }
     };
 
     return (
