@@ -25,7 +25,6 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
     const [count, setCount] = useState<string>('2');
     const [contact, setContact] = useState<string>('');
     const [notes, setNotes] = useState<string>('');
-    const [deleted, setDeleted] = useState<boolean>(false);
 
     useEffect(() => {
         if (reservation) {
@@ -39,7 +38,6 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
             setCount(reservation.count.toString());
             setContact(reservation.contact);
             setNotes(reservation.notes);
-            setDeleted(reservation.deleted);
 
         } else if (inputDate) {
             setEditMode(false);
@@ -51,7 +49,6 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
             setCount('2');
             setContact('');
             setNotes('');
-            setDeleted(false);
 
         } else {
             setEditMode(false);
@@ -63,7 +60,6 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
             setCount('2');
             setContact('');
             setNotes('');
-            setDeleted(false);
         }
     }, [open]);
 
