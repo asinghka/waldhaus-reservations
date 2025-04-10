@@ -112,13 +112,13 @@ export function SimpleTable({ filterDate, modalOpen } : { filterDate: Date, moda
                                 {reservations
                                     .map((reservation) => (
                                         <tr key={reservation.name + reservation.date} className="hover:bg-gray-50 cursor-pointer" onClick={() => handleEditReservation(reservation)}>
-                                            <td className="text-xl text-center font-medium whitespace-nowrap text-gray-900 w-3/10">
+                                            <td className="text-m text-center font-medium whitespace-nowrap text-gray-900 w-3/10">
                                                 {reservation.name}
                                             </td>
-                                            <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleDateString('de-DE', { month: '2-digit', day: '2-digit' })}</td>
-                                            <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', hour12: false })}</td>
-                                            <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{reservation.count}</td>
-                                            <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-1/10">{reservation.notes ? <div className="flex justify-center"><CheckIcon className="size-6"/></div>:''}</td>
+                                            <td className="px-3 py-4 text-l text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleDateString('de-DE', { month: '2-digit', day: '2-digit' })}</td>
+                                            <td className="px-3 py-4 text-l text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', hour12: false })}</td>
+                                            <td className="px-3 py-4 text-l text-center whitespace-nowrap text-gray-900 w-2/10">{reservation.count}</td>
+                                            <td className="px-3 py-4 text-l text-center whitespace-nowrap text-gray-900 w-1/10">{reservation.notes ? <div className="flex justify-center"><CheckIcon className="size-6"/></div>:''}</td>
                                         </tr>
                                     ))}
                                 </tbody>
