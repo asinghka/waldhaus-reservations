@@ -3,18 +3,26 @@ import {fileURLToPath} from 'url'
 import sqlite3 from "sqlite3";
 import {open} from 'sqlite'
 import path from 'node:path';
+import * as fs from "node:fs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const isDev = !app.isPackaged;
 
 // Get the path to the user data directory
+app.setName('waldhaus-reservations');
 const userDataPath = app.getPath('userData');
-const dbPath = path.join(userDataPath, 'database.sqlite');
+
+const dbDirectory = path.join(userDataPath);
+if (!fs.existsSync(dbDirectory)) {
+    fs.mkdirSync(dbDirectory, { recursive: true });
+}
 
 const db = await open({
-    filename: path.join(__dirname, 'database.sqlite'),
+    filename: path.join(userDataPath, 'database.sqlite'),
     driver: sqlite3.Database,
-})
+    mode: sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE
+});
+
 
 await db.exec(`
     CREATE TABLE IF NOT EXISTS reservations (
