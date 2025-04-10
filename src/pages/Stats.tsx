@@ -127,7 +127,7 @@ export default function Stats() {
                     </div>
                 </div>
                 <div className="pt-12 px-4 mx-auto max-w-7xl">
-                    <BarChart reservations={reservations} countView={countView} yearView={yearView} />
+                    <BarChart reservations={reservations} countView={countView} yearView={yearView} filterDate={filterDate.toDate()} />
                 </div>
             </main>
         </>
