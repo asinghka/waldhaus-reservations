@@ -65,6 +65,13 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
         fetchReservations().catch(error => console.error('Error fetching reservations:', error));
     }, [openModal, filterDate]);
 
+    useEffect(() => {
+        fetchReservations().catch(error => console.error('Error fetching reservations:', error));
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        const intervalId = setInterval(fetchReservations, 60000);
+        return () => clearInterval(intervalId);
+    }, []);
+
     const afternoonReservations = reservations.filter(
         (reservation) => {
             const time = new Date(reservation.date).getHours()
@@ -78,6 +85,18 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
             return time >= 17
         }
     )
+
+    const isCurrentReservation = (reservation: Reservation) => {
+        const reservationDate = new Date(reservation.date);
+
+        const startDate = new Date();
+        startDate.setMinutes(startDate.getMinutes() - 15);
+
+        const endDate = new Date();
+        endDate.setMinutes(endDate.getMinutes() + 15);
+
+        return reservationDate > startDate && reservationDate < endDate;
+    };
 
     return (
         <>
@@ -166,17 +185,22 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                 <tbody className="divide-y divide-gray-200 bg-white">
                                 {
                                     afternoonReservations
-                                    .map((reservation) => (
-                                        <tr key={reservation.name + reservation.date} className="hover:bg-gray-50 cursor-pointer" onClick={() => handleEditReservation(reservation)}>
-                                            <td className="py-4 pr-3 pl-4 text-xl text-center font-medium whitespace-nowrap text-gray-900 sm:pl-6 w-3/10">
-                                                {reservation.name}
-                                            </td>
-                                            <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleDateString('de-DE', { month: '2-digit', day: '2-digit', year: '2-digit' })}</td>
-                                            <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', hour12: false })}</td>
-                                            <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{reservation.count}</td>
-                                            <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-1/10">{reservation.notes ? <div className="flex justify-center"><CheckIcon className="size-6"/></div>:''}</td>
-                                        </tr>
-                                    ))}
+                                        .map((reservation) => {
+                                                const current = isCurrentReservation(reservation);
+                                                return (
+                                                    <tr key={reservation.name + reservation.date} className={classNames(current ? "bg-green-200 hover:bg-green-100" : "bg-white hover:bg-gray-50",  "cursor-pointer")} onClick={() => handleEditReservation(reservation)}>
+                                                        <td className="py-4 pr-3 pl-4 text-xl text-center font-medium whitespace-nowrap text-gray-900 sm:pl-6 w-3/10">
+                                                            {reservation.name}
+                                                        </td>
+                                                        <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleDateString('de-DE', { month: '2-digit', day: '2-digit', year: '2-digit' })}</td>
+                                                        <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', hour12: false })}</td>
+                                                        <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{reservation.count}</td>
+                                                        <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-1/10">{reservation.notes ? <div className="flex justify-center"><CheckIcon className="size-6"/></div>:''}</td>
+                                                    </tr>
+                                                )
+                                            }
+                                        )
+                                }
                                 </tbody>
                             </table>
                         </div>
@@ -221,17 +245,22 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                     <tbody className="divide-y divide-gray-200 bg-white">
                                     {
                                         eveningReservations
-                                        .map((reservation) => (
-                                            <tr key={reservation.name + reservation.date} className="hover:bg-gray-50 cursor-pointer" onClick={() => handleEditReservation(reservation)}>
-                                                <td className="py-4 pr-3 pl-4 text-xl text-center font-medium whitespace-nowrap text-gray-900 sm:pl-6 w-3/10">
-                                                    {reservation.name}
-                                                </td>
-                                                <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleDateString('de-DE', { month: '2-digit', day: '2-digit', year: '2-digit' })}</td>
-                                                <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', hour12: false })}</td>
-                                                <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{reservation.count}</td>
-                                                <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-1/10">{reservation.notes ? <div className="flex justify-center"><CheckIcon className="size-6"/></div>:''}</td>
-                                            </tr>
-                                        ))}
+                                        .map((reservation) => {
+                                            const current = isCurrentReservation(reservation);
+                                            return (
+                                                <tr key={reservation.name + reservation.date} className={classNames(current ? "bg-green-200 hover:bg-green-100" : "bg-white hover:bg-gray-50",  "cursor-pointer")} onClick={() => handleEditReservation(reservation)}>
+                                                    <td className="py-4 pr-3 pl-4 text-xl text-center font-medium whitespace-nowrap text-gray-900 sm:pl-6 w-3/10">
+                                                        {reservation.name}
+                                                    </td>
+                                                    <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleDateString('de-DE', { month: '2-digit', day: '2-digit', year: '2-digit' })}</td>
+                                                    <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', hour12: false })}</td>
+                                                    <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{reservation.count}</td>
+                                                    <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-1/10">{reservation.notes ? <div className="flex justify-center"><CheckIcon className="size-6"/></div>:''}</td>
+                                                </tr>
+                                                )
+                                            }
+                                        )
+                                    }
                                     </tbody>
                                 </table>
                             </div>
