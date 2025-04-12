@@ -6,7 +6,6 @@ import path from 'node:path';
 import * as fs from "node:fs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const isDev = !app.isPackaged;
 
 // Get the path to the user data directory
 app.setName('waldhaus-reservations');
@@ -79,15 +78,15 @@ const createWindow = () => {
         }
     })
 
-    if (isDev) {
+    if (app.isPackaged) {
+        mainWindow.loadFile(path.join(__dirname, '../dist/index.html'))
+    } else {
         // Making sure that the Server has started before
         // the URL is loaded
         setTimeout(() => {
             mainWindow.loadURL('http://localhost:5173');
         }, 100)
         mainWindow.webContents.openDevTools()
-    } else {
-        mainWindow.loadFile(path.join(__dirname, '..', 'dist/index.html'))
     }
 }
 

@@ -121,7 +121,7 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                         <div className="flex flex-col items-center">
                             <div className="flex flex-row items-center justify-center opacity-20 pt-24 pb-20">
                                 <h1 className="text-3xl mr-10">Keine Reservierungen vorhanden ...</h1>
-                                <img src="/assets/coffee.png" className="size-12 items-center"/>
+                                <img src="./assets/coffee.png" className="size-12 items-center"/>
                             </div>
                             <div>
                                 <button

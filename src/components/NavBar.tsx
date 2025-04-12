@@ -22,7 +22,7 @@ export default function NavBar() {
                 <div className="flex h-24 items-center justify-between">
                     <div className="flex shrink-0">
                         <img
-                            src="/assets/logo.png"
+                            src="./assets/logo.png"
                             className="h-14 w-auto block"
                         />
                     </div>

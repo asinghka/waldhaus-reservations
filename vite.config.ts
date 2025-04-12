@@ -10,6 +10,11 @@ export default defineConfig({
       tailwindcss()
   ],
   build: {
-    outDir: 'dist', // Optional, defines the output directory
+    outDir: 'dist',
+    rollupOptions: {
+      output: {
+          entryFileNames: 'index.js',
+      }
+    }
   },
 });

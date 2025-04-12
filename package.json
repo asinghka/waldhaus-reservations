@@ -1,14 +1,18 @@
 {
   "name": "waldhaus-reservations",
+  "author": "Arjun Singh Kalra",
+  "description": "Simple web app for managing reservations",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.0",
   "type": "module",
+  "main": "electron/main.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "concurrently \"vite\" \"electron electron/main.js\""
+    "start": "concurrently \"vite\" \"electron electron/main.js\"",
+    "package": "npm run build && electron-builder"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -34,6 +38,7 @@
     "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "electron": "^34.2.0",
+    "electron-builder": "^26.0.12",
     "eslint": "^9.19.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.18",
@@ -43,6 +48,7 @@
     "vite": "^6.1.0"
   },
   "build": {
+    "appId": "waldhaus-reservations",
     "productName": "Waldhaus Reservierungen",
     "directories": {
       "output": "dist"
@@ -50,16 +56,14 @@
     "files": [
       "dist/**/*",
       "electron/**/*",
+      "public/assets/**/*",
       "package.json"
     ],
     "mac": {
-      "category": "public.app-category.utilities",
       "icon": "public/assets/icon.icns"
     },
     "win": {
-      "target": [
-        "nsis"
-      ],
+      "target": [ "nsis" ],
       "icon": "public/assets/icon.ico"
     }
   }
