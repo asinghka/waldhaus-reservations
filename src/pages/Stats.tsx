@@ -25,7 +25,7 @@ export default function Stats() {
             const filteredReservations = data.filter((reservation) => {
                 const reservationDate = new Date(reservation.date);
                 return reservationDate.getFullYear() === filterDate.toDate().getFullYear()
-                    && reservationDate.getMonth() === filterDate.toDate().getMonth()
+                    && (yearView || reservationDate.getMonth() === filterDate.toDate().getMonth())
                     && !reservation.deleted;
             }).sort((a, b) => {
                 const timeA = new Date(a.date).getTime();
@@ -52,7 +52,7 @@ export default function Stats() {
 
     useEffect(() => {
         fetchReservations().catch(error => console.error('Error fetching reservations:', error));
-    }, [filterDate]);
+    }, [filterDate, yearView]);
 
     return (
         <>
