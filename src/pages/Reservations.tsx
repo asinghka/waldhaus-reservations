@@ -2,6 +2,7 @@ import Calendar from "../components/Calendar.tsx";
 import {SimpleTable} from "../components/SimpleTable.tsx";
 import * as React from "react";
 import Header from "../components/Header.tsx";
+import {t} from "../i18n.ts";
 
 export default function Reservations() {
     const [selectedDate, setSelectedDate] = React.useState<Date>(new Date());
@@ -17,7 +18,7 @@ export default function Reservations() {
 
     return (
         <>
-            <Header title="Reservierungen im Überblick"/>
+            <Header title={t('reservationsOverview')}/>
             <div className="flex flex-1">
                 <div className="flex flex-row flex-1 mx-auto max-w-7xl px-8">
                     <div className="flex h-fit sticky top-10 self-start">

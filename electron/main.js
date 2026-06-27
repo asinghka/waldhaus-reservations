@@ -82,12 +82,15 @@ const createWindow = () => {
         mainWindow.maximize();
         mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
     } else {
-        // Making sure that the Server has started before
-        // the URL is loaded
-        setTimeout(() => {
-            mainWindow.loadURL('http://localhost:5173');
-        }, 100)
-        mainWindow.webContents.openDevTools();
+        const loadDevURL = () => {
+            mainWindow.loadURL('http://localhost:5173').catch(() => {
+                setTimeout(loadDevURL, 100);
+            });
+        };
+        mainWindow.webContents.on('did-fail-load', () => {
+            setTimeout(loadDevURL, 100);
+        });
+        loadDevURL();
     }
 }
 

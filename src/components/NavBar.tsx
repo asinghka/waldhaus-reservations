@@ -1,12 +1,13 @@
 import { Disclosure } from '@headlessui/react'
 import * as React from "react";
 import {Link} from "react-router-dom";
+import {t} from "../i18n.ts";
 
 const navigation = [
-    { name: 'Heute', href: '/today', width: 'w-30' },
-    { name: 'Reservierungen', href: '/reservations', width: 'w-48' },
-    { name: 'Statistik', href: '/stats', width: 'w-32' },
-    { name: 'Admin', href: '/admin', width: 'w-30' },
+    { name: t('today'), href: '/today', width: 'w-30' },
+    { name: t('reservations'), href: '/reservations', width: 'w-48' },
+    { name: t('statistics'), href: '/stats', width: 'w-32' },
+    { name: t('admin'), href: '/admin', width: 'w-30' },
 ]
 
 function classNames(...classes: string[]) {
@@ -14,7 +15,7 @@ function classNames(...classes: string[]) {
 }
 
 export default function NavBar() {
-    const [activeTab, setActiveTab] = React.useState<string>('Heute')
+    const [activeTab, setActiveTab] = React.useState<string>(t('today'))
 
     return (
         <Disclosure as="nav" className="border-b border-gray-200 bg-gray-800">

@@ -1,3 +1,5 @@
+import {t} from "../i18n.ts";
+
 export default function Divider() {
     return (
         <div className="relative p-8">
@@ -5,7 +7,7 @@ export default function Divider() {
                 <div className="w-full border-t border-gray-300" />
             </div>
             <div className="relative flex justify-center">
-                <span className="bg-gray-50 px-2 text-xl text-gray-500">Pause</span>
+                <span className="bg-gray-50 px-2 text-xl text-gray-500">{t('break')}</span>
             </div>
         </div>
     )

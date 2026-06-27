@@ -7,6 +7,7 @@ import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import { Button } from "@mui/material";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, {Dayjs} from "dayjs";
+import {t, dayjsLocale} from "../i18n.ts";
 
 export default function Stats() {
     const [reservations, setReservations] = useState<Reservation[]>([]);
@@ -56,13 +57,13 @@ export default function Stats() {
 
     return (
         <>
-            <Header title="Statistik zu Reservierungen"/>
+            <Header title={t('statsTitle')}/>
             <main className="py-6">
                 <div className="flex px-8 mx-auto max-w-7xl">
                     <div className="mt-0 mr-4">
-                        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
+                        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={dayjsLocale}>
                             <DatePicker
-                                label="Monat"
+                                label={t('month')}
                                 views={yearView ? ['year'] : ['month']}
                                 value={filterDate}
                                 onChange={(selectedDate) => setFilterDate(selectedDate ? selectedDate : dayjs())}
@@ -84,7 +85,7 @@ export default function Stats() {
                             onClick={() => setYearView(!yearView)}
                             sx={{ width: 150, height: 50, borderRadius: '8px', backgroundColor: yearView ? 'rgb(21, 93, 252)' : 'rgb(51,118,253)' }}
                         >
-                            {yearView ? "Monatsansicht" : "Jahresansicht"}
+                            {yearView ? t('monthView') : t('yearView')}
                         </Button>
                     </div>
                     <div className="ml-auto mt-0 mr-4">

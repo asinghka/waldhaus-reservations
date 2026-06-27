@@ -4,6 +4,7 @@ import ReservationModal from "./ReservationModal.tsx";
 import {useEffect, useState} from "react";
 import {Reservation} from "../types/types";
 import {Button} from "@mui/material";
+import {t, locale} from "../i18n.ts";
 
 export function SimpleTable({ filterDate, modalOpen } : { filterDate: Date, modalOpen: boolean }) {
     const [reservations, setReservations] = useState<Reservation[]>([]);
@@ -90,19 +91,19 @@ export function SimpleTable({ filterDate, modalOpen } : { filterDate: Date, moda
                                 <thead className="bg-gray-100">
                                 <tr>
                                     <th scope="col" className="py-3.5 pr-3 pl-4 text-xl font-semibold text-gray-900 sm:pl-6 w-3/10">
-                                        Name
+                                        {t('name')}
                                     </th>
                                     <th scope="col" className="px-3 py-3.5 text-xl font-semibold text-gray-900 w-2/10">
-                                        Datum
+                                        {t('date')}
                                     </th>
                                     <th scope="col" className="px-3 py-3.5 text-xl font-semibold text-gray-900 w-2/10">
-                                        Uhrzeit
+                                        {t('time')}
                                     </th>
                                     <th scope="col" className="px-3 py-3.5 text-xl font-semibold text-gray-900 w-2/10">
-                                        Anzahl
+                                        {t('count')}
                                     </th>
                                     <th scope="col" className="px-3 py-3.5 text-xl font-semibold text-gray-900 w-1/10">
-                                        Anm.
+                                        {t('notesShort')}
                                     </th>
                                 </tr>
                                 </thead>
@@ -113,8 +114,8 @@ export function SimpleTable({ filterDate, modalOpen } : { filterDate: Date, moda
                                             <td className="text-m text-center font-medium whitespace-nowrap text-gray-900 w-3/10">
                                                 {reservation.name}
                                             </td>
-                                            <td className="px-3 py-4 text-l text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleDateString('de-DE', { month: '2-digit', day: '2-digit' })}</td>
-                                            <td className="px-3 py-4 text-l text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', hour12: false })}</td>
+                                            <td className="px-3 py-4 text-l text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleDateString(locale, { month: '2-digit', day: '2-digit' })}</td>
+                                            <td className="px-3 py-4 text-l text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', hour12: false })}</td>
                                             <td className="px-3 py-4 text-l text-center whitespace-nowrap text-gray-900 w-2/10">{reservation.count}</td>
                                             <td className="px-3 py-4 text-l text-center whitespace-nowrap text-gray-900 w-1/10">{reservation.notes ? <div className="flex justify-center"><CheckIcon className="size-6"/></div>:''}</td>
                                         </tr>

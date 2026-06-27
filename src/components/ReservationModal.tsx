@@ -9,6 +9,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import 'dayjs/locale/de';
 import {TextField} from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
+import {t, dayjsLocale} from "../i18n.ts";
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -154,7 +155,7 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                     >
                         <div className="bg-gray-800 px-4 py-3 sm:flex sm:px-6 pt-6 pb-6">
                             <DialogTitle as="h3" className="ml-4 text-2xl font-semibold text-white ">
-                                {editMode ? "Reservierung bearbeiten" : "Neue Reservierung"}
+                                {editMode ? t('editReservation') : t('newReservation')}
                             </DialogTitle>
                             <XMarkIcon className="size-8 text-white ml-auto cursor-pointer" onClick={() => setOpen(false)}/>
                         </div>
@@ -167,7 +168,7 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                                     <div className="grid gap-x-6 gap-y-8 grid-cols-12 w-full">
                                         <div className="col-span-4">
                                             <TextField
-                                                label="Name"
+                                                label={t('name')}
                                                 value={name}
                                                 onChange={(e) => setName(e.target.value)}
                                                 disabled={readOnly}
@@ -175,9 +176,9 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                                             />
                                         </div>
                                         <div className="col-span-4">
-                                            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
+                                            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={dayjsLocale}>
                                                 <DatePicker
-                                                    label="Datum"
+                                                    label={t('date')}
                                                     value={date}
                                                     onChange={(selectedDate) => setDate(selectedDate ? selectedDate : dayjs())}
                                                     disabled={readOnly}
@@ -194,9 +195,9 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                                             </LocalizationProvider>
                                         </div>
                                         <div className="col-span-4">
-                                            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
+                                            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={dayjsLocale}>
                                                 <TimePicker
-                                                    label="Uhrzeit"
+                                                    label={t('time')}
                                                     value={time}
                                                     onChange={(selectedTime) => setTime(selectedTime ? selectedTime : dayjs())}
                                                     disabled={readOnly}
@@ -216,7 +217,7 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                                     <div className="mt-4 grid gap-x-6 gap-y-8 grid-cols-12">
                                         <div className="col-span-4">
                                             <TextField
-                                                label="Anzahl"
+                                                label={t('count')}
                                                 value={count}
                                                 onChange={(e) => {
                                                     const value = e.target.value;
@@ -234,7 +235,7 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                                     <div className="mt-4 grid gap-x-6 gap-y-8 grid-cols-12">
                                         <div className="col-span-full">
                                             <TextField
-                                                label="Kontakt"
+                                                label={t('contact')}
                                                 fullWidth
                                                 value={contact}
                                                 onChange={(e) => setContact(e.target.value)}
@@ -246,7 +247,7 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                                     <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12">
                                         <div className="col-span-full">
                                             <TextField
-                                                label="Anmerkungen"
+                                                label={t('notes')}
                                                 fullWidth
                                                 multiline
                                                 rows={3}
@@ -266,7 +267,7 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                                 onClick={() => setOpen(false)}
                                 className="cursor-pointer inline-flex w-36 justify-center rounded-md bg-white px-3 py-2 text-lg font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-100 ml-6 mr-4"
                             >
-                                Abbrechen
+                                {t('cancel')}
                             </button>
 
                             {
@@ -276,7 +277,7 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                                         onClick={() => setReadOnly(false)}
                                         className="cursor-pointer ml-auto mr-4 inline-flex w-36 justify-center rounded-md bg-yellow-400 px-3 py-2 text-lg font-semibold text-gray-900 shadow-xs hover:bg-yellow-300"
                                     >
-                                        Bearbeiten
+                                        {t('edit')}
                                     </button>
                                 ) : editMode && !adminMode ? (
                                     <div className="ml-auto">
@@ -285,14 +286,14 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                                             onClick={function () { void handleDeleteRestore(false); }}
                                             className="cursor-pointer mr-8 inline-flex w-36 justify-center rounded-md bg-red-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-red-400"
                                         >
-                                            Löschen
+                                            {t('delete')}
                                         </button>
                                         <button
                                             type="button"
                                             onClick={() => void handleSave()}
                                             className="cursor-pointer mr-4 inline-flex w-36 justify-center rounded-md bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-blue-500"
                                         >
-                                            Speichern
+                                            {t('save')}
                                         </button>
                                     </div>
                                 ) : editMode && adminMode ? (
@@ -302,14 +303,14 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                                             onClick={function () { void handleDeleteRestore(true); }}
                                             className="cursor-pointer mr-8 inline-flex w-44 justify-center rounded-md bg-green-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-green-400"
                                         >
-                                            Wiederherstellen
+                                            {t('restore')}
                                         </button>
                                         <button
                                             type="button"
                                             onClick={() => void handleSave()}
                                             className="cursor-pointer mr-4 inline-flex w-36 justify-center rounded-md bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-blue-500"
                                         >
-                                            Speichern
+                                            {t('save')}
                                         </button>
                                     </div>
                                     ) : (
@@ -318,7 +319,7 @@ export default function ReservationModal( { open, setOpen, reservation, inputDat
                                         onClick={() => void handleSave()}
                                         className="cursor-pointer ml-auto mr-4 inline-flex w-36 justify-center rounded-md bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-xs hover:bg-blue-500"
                                     >
-                                        Speichern
+                                        {t('save')}
                                     </button>
                                 )
                             }

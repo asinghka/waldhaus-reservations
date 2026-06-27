@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import ReservationModal from "./ReservationModal.tsx";
 import {Reservation} from "../types/types";
 import {Button} from "@mui/material";
+import {t, locale} from "../i18n.ts";
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -109,7 +110,7 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                 className="h-[50px] cursor-pointer mr-auto block rounded-md bg-blue-600 px-3 py-2 text-center text-lg font-regular text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                             >
                                 <div className="flex items-center justify-center">
-                                    Neue Reservierung
+                                    {t('newReservation')}
                                     <PlusCircleIcon className="ml-2 size-6 text-white"/>
                                 </div>
                             </button>
@@ -139,7 +140,7 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                     ) : (
                         <div className="flex flex-col items-center">
                             <div className="flex flex-row items-center justify-center opacity-20 pt-24 pb-20">
-                                <h1 className="text-3xl mr-10">Keine Reservierungen vorhanden ...</h1>
+                                <h1 className="text-3xl mr-10">{t('noReservations')}</h1>
                                 <img src="./assets/coffee.png" className="size-12 items-center"/>
                             </div>
                             <div>
@@ -149,7 +150,7 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                     className="h-[50px] cursor-pointer ml-auto block rounded-md bg-blue-600 px-3 py-2 text-center text-lg font-regular text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                                 >
                                     <div className="flex items-center justify-center">
-                                        Neue Reservierung
+                                        {t('newReservation')}
                                         <PlusCircleIcon className="ml-2 size-6 text-white"/>
                                     </div>
                                 </button>
@@ -166,19 +167,19 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                 <thead className="bg-gray-100">
                                 <tr>
                                     <th scope="col" className="py-3.5 pr-3 pl-4 text-xl font-semibold text-gray-900 sm:pl-6 w-3/10">
-                                        Name
+                                        {t('name')}
                                     </th>
                                     <th scope="col" className="px-3 py-3.5 text-xl font-semibold text-gray-900 w-2/10">
-                                        Datum
+                                        {t('date')}
                                     </th>
                                     <th scope="col" className="px-3 py-3.5 text-xl font-semibold text-gray-900 w-2/10">
-                                        Uhrzeit
+                                        {t('time')}
                                     </th>
                                     <th scope="col" className="px-3 py-3.5 text-xl font-semibold text-gray-900 w-2/10">
-                                        Anzahl
+                                        {t('count')}
                                     </th>
                                     <th scope="col" className="px-3 py-3.5 text-xl font-semibold text-gray-900 w-1/10">
-                                        Anm.
+                                        {t('notesShort')}
                                     </th>
                                 </tr>
                                 </thead>
@@ -192,8 +193,8 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                                         <td className="py-4 pr-3 pl-4 text-xl text-center font-medium whitespace-nowrap text-gray-900 sm:pl-6 w-3/10">
                                                             {reservation.name}
                                                         </td>
-                                                        <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleDateString('de-DE', { month: '2-digit', day: '2-digit', year: '2-digit' })}</td>
-                                                        <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', hour12: false })}</td>
+                                                        <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleDateString(locale, { month: '2-digit', day: '2-digit', year: '2-digit' })}</td>
+                                                        <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', hour12: false })}</td>
                                                         <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{reservation.count}</td>
                                                         <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-1/10">{reservation.notes ? <div className="flex justify-center"><CheckIcon className="size-6"/></div>:''}</td>
                                                     </tr>
@@ -225,19 +226,19 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                         <thead className="bg-gray-100">
                                         <tr>
                                             <th scope="col" className="py-3.5 pr-3 pl-4 text-xl font-semibold text-gray-900 sm:pl-6 w-3/10">
-                                                Name
+                                                {t('name')}
                                             </th>
                                             <th scope="col" className="px-3 py-3.5 text-xl font-semibold text-gray-900 w-2/10">
-                                                Datum
+                                                {t('date')}
                                             </th>
                                             <th scope="col" className="px-3 py-3.5 text-xl font-semibold text-gray-900 w-2/10">
-                                                Uhrzeit
+                                                {t('time')}
                                             </th>
                                             <th scope="col" className="px-3 py-3.5 text-xl font-semibold text-gray-900 w-2/10">
-                                                Anzahl
+                                                {t('count')}
                                             </th>
                                             <th scope="col" className="px-3 py-3.5 text-xl font-semibold text-gray-900 w-1/10">
-                                                Anmerkung
+                                                {t('notes')}
                                             </th>
                                         </tr>
                                         </thead>
@@ -252,8 +253,8 @@ export default function ReservationTable({ filterDate } : { filterDate: Date }) 
                                                     <td className="py-4 pr-3 pl-4 text-xl text-center font-medium whitespace-nowrap text-gray-900 sm:pl-6 w-3/10">
                                                         {reservation.name}
                                                     </td>
-                                                    <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleDateString('de-DE', { month: '2-digit', day: '2-digit', year: '2-digit' })}</td>
-                                                    <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', hour12: false })}</td>
+                                                    <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleDateString(locale, { month: '2-digit', day: '2-digit', year: '2-digit' })}</td>
+                                                    <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{new Date(reservation.date).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', hour12: false })}</td>
                                                     <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-2/10">{reservation.count}</td>
                                                     <td className="px-3 py-4 text-xl text-center whitespace-nowrap text-gray-900 w-1/10">{reservation.notes ? <div className="flex justify-center"><CheckIcon className="size-6"/></div>:''}</td>
                                                 </tr>

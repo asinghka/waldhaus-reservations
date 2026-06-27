@@ -1,6 +1,7 @@
 import {Bar} from "react-chartjs-2"
 import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip, ChartOptions} from "chart.js";
 import {Reservation} from "../types/types";
+import {t, months} from "../i18n.ts";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -25,7 +26,7 @@ function BarChart( { reservations, filterDate = new Date(), yearView = false, co
             labels: Array.from({length: 31}, (_, i) => (i + 1).toString() + "." + (filterDate.getMonth() + 1).toString()),
             datasets: [
                 {
-                    label: countView ? "Personen" : "Reservierungen",
+                    label: countView ? t('people') : t('reservations'),
                     data: values,
                     backgroundColor: countView ? "rgb(195,0,239)" : "rgb(45,126,246)",
                     borderColor: "rgba(0, 0, 0, 1)",
@@ -51,14 +52,11 @@ function BarChart( { reservations, filterDate = new Date(), yearView = false, co
         }
 
         return {
-            labels: [
-                'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
-                'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'
-            ],
+            labels: months,
 
             datasets: [
                 {
-                    label: countView ? "Personen" : "Reservierungen",
+                    label: countView ? t('people') : t('reservations'),
                     data: values,
                     backgroundColor: countView ? "rgb(195,0,239)" : "rgb(45,126,246)",
                     borderColor: "rgba(0, 0, 0, 1)",
